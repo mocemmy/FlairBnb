@@ -48,6 +48,14 @@ const routes = require('./routes');
 
 app.use(routes); // Connect all the routes
 
+//welcome page at root:
+app.get('/', (req, res) => {
+  res.json({
+    message: "Welcome to my airbnb api!!",
+    information: "Emily Morgan's App Academy Portfolio Project"
+  });
+})
+
 // Catch unhandled requests and forward to error handler.
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
