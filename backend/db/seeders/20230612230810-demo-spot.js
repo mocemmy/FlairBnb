@@ -79,6 +79,5 @@ module.exports = {
         [Op.in]: ['Hokie Haven', 'Airport Stay', 'Cozy Colonial', 'Lake House', 'Quaint Abode']
     }
   })
-
   }
 };
