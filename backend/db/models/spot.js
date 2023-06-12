@@ -59,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     lng: {
-      type: DataTypes.DECIMAL(6,4),
+      type: DataTypes.DECIMAL(7,4),
       validate: {
         min: -180,
         max: 180
