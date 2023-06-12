@@ -59,7 +59,7 @@ const spots = [
     lat: 11.9321,
     lng: 77.9999,
     name: 'Quaint Abode',
-    description: 'air bnb on the beautiful River Road',
+    description: 'A bnb on the beautiful River Road',
     price: 669.39,
   },
 ]
