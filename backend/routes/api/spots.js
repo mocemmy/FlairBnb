@@ -14,6 +14,7 @@ const { Spot } = require('../../db/models');
 router.get('/', async(req, res) => {
     //find all spots
     const spots = await Spot.findAll({
+        raw: true,
         include: [
             {
                 model: Review,
@@ -31,6 +32,7 @@ router.get('/', async(req, res) => {
             //add avgRating for each spot
             include: [
                 [sequelize.fn('AVG', sequelize.col('ratings.stars')), 'avgRating'],
+                [sequelize.col('previewImage.url'), 'previewImage']
             ]
         },
         group: ['Spot.id']
