@@ -14,6 +14,12 @@ const reviews = [
     stars: 2,
   },
   {
+    spotId: 1,
+    userId:3,
+    review: 'Convenient for the bus line',
+    stars: 4
+  },
+  {
     spotId: 5,
     userId: 3,
     review: 'Such a beautiful part of the city!',
