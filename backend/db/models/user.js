@@ -26,17 +26,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
 
-  User.init(
-    {
-      firstName: {
+  User.init({
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    firstName: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    lastName: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      lastName: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      username: {
+    username: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -47,22 +52,22 @@ module.exports = (sequelize, DataTypes) => {
             }
           }
         }
-      },
-      email: {
+    },
+    email: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           len: [3, 256],
           isEmail: true
         }
-      },
-      hashedPassword: {
+    },
+    hashedPassword: {
         type: DataTypes.STRING.BINARY,
         allowNull: false,
         validate: {
           len: [60, 60]
         }
-      }
+    }
     }, {
       sequelize,
       modelName: 'User',
