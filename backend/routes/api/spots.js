@@ -1,7 +1,7 @@
 const express = require('express');
-const { Op } = require('sequelize');
-const bcrypt = require('bcryptjs');
-const { User, Spot, Review, SpotImage, sequelize, Sequelize } = require('../../db/models');
+// const { Op } = require('sequelize');
+// const bcrypt = require('bcryptjs');
+const { Spot, Review, SpotImage, sequelize } = require('../../db/models');
 
 const router = express.Router();
 
@@ -34,11 +34,6 @@ router.get('/', async(req, res) => {
         },
         group: ['Spot.id']
     });
-
- 
-
-
-
     res.json({spots});
 })
 
