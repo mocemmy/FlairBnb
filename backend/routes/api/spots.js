@@ -1,7 +1,7 @@
 const express = require('express');
 // const { Op } = require('sequelize');
 // const bcrypt = require('bcryptjs');
-const { Spot, Review, SpotImage, sequelize } = require('../../db/models');
+const { Spot, Review, SpotImage, User, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
@@ -112,7 +112,29 @@ router.post('/:spotId/images', requireAuth, async(req, res) => {
 
 //get details of a spot from an id:
 router.get('/:spotId', async(req, res) => {
-    const spot = await Spot.findByPk(req.params.spotId);
+    const spot = await Spot.findByPk(req.params.spotId, {
+        include: [
+            {
+                model: Review,
+                attributes: []
+            },
+            {
+                model: SpotImage,
+                attributes: ['id', 'url', 'preview']
+            },
+            {
+                model: User,
+                as: 'Owner',
+                attributes: ['id', 'firstName', 'lastName']
+            }
+        ],
+        attributes: {
+            include: [
+                [sequelize.fn('COUNT'), 'numReviews'],
+                [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgStarRating'],
+            ]
+        }
+    });
     if(!spot) {
         res.statusCode = 404;
         res.json({
