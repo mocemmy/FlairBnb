@@ -6,6 +6,8 @@ if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
 
+options.tableName = 'Spots';
+
 const spots = [
   {
     ownerId: 1,
@@ -69,15 +71,12 @@ const spots = [
   },
 ]
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    options.tableName = 'Spots';
     return queryInterface.bulkInsert(options, spots, {});
   },
 
   down: async (queryInterface, Sequelize) => {
-    options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
       name: {
