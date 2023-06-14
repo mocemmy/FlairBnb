@@ -129,7 +129,8 @@ router.get('/:spotId', async(req, res) => {
             },
             {
                 model: SpotImage,
-                attributes: ['id', 'url', 'preview']
+                attributes: ['id', 'url', 'preview'],
+                group: ['SpotImages.id']
             },
             {
                 model: User,
