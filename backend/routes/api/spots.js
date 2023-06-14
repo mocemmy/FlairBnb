@@ -129,8 +129,7 @@ router.get('/:spotId', async(req, res) => {
             },
             {
                 model: SpotImage,
-                attributes: ['id', 'url', 'preview'],
-                group: ['SpotImages.id']
+                attributes: ['id', 'url', 'preview']
             },
             {
                 model: User,
@@ -144,7 +143,7 @@ router.get('/:spotId', async(req, res) => {
                 [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgStarRating'],
             ]
         },
-        group: ['Spot.id']
+        group: ['Spot.id', 'SpotImages.id']
     });
     if(!spot) {
         res.statusCode = 404;
