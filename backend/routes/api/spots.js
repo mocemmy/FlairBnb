@@ -91,6 +91,25 @@ router.get('/current', async(req, res) => {
     res.json({spots});
     
 })
+//add an image to a Spot based on the Spot's id
+router.post('/:spotId/images', async(req, res) => {
+    const spotId = req.params.spotId;
+    const {url, preview} = req.body;
+    const spot = await Spot.findByPk(spotId);
+    if(!spot){
+        res.statusCode = 404;
+        return res.json({
+            "message": "Spot couldn't be found"
+        })
+    }
+
+    let spotImg = await SpotImage.create({spotId, url, preview});
+    spotImg = spotImg.toJSON();
+    res.json({
+        url: spotImg.url,
+        preview: spotImg.preview
+    })
+})
 
 //get details of a spot from an id:
 router.get('/:spotId', async(req, res) => {
