@@ -56,7 +56,6 @@ const validateSpot = [
 router.get('/', async(req, res) => {
     //find all spots
     const spots = await Spot.findAll({
-        raw: true,
         include: [
             {
                 model: Review,
