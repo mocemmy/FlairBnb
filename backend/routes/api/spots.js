@@ -85,7 +85,25 @@ router.get('/current', requireAuth, async(req, res) => {
     const spots = await Spot.findAll({
         where: {
             "ownerId": user.toJSON().id
-        }
+        },
+        include: [
+            {
+                model: Review,
+                attributes: []
+            },
+            {
+                model: SpotImage,
+                attributes: []
+            }
+        ],
+        attributes: {
+            include: [
+                [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
+                [sequelize.col('SpotImages.url'), 'previewImage']
+            ]
+        },
+        group: ['Spot.id', 'SpotImages.url']
+
     })
     res.json({spots});
     
