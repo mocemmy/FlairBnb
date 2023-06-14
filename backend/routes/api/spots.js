@@ -4,10 +4,7 @@ const express = require('express');
 const { Spot, Review, SpotImage, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-<<<<<<< HEAD
-=======
 const { requireAuth } = require('../../utils/auth');
->>>>>>> dev
 
 const router = express.Router();
 
@@ -53,10 +50,6 @@ const validateSpot = [
         .withMessage("Price per day is required"),
     handleValidationErrors
 ]
-<<<<<<< HEAD
-
-=======
->>>>>>> dev
 
 
 //GET all spots:
@@ -88,11 +81,7 @@ router.get('/', async(req, res) => {
 })
 
 //Get all spots owned by the current user:
-<<<<<<< HEAD
-router.get('/current', async(req, res) => {
-=======
 router.get('/current', requireAuth, async(req, res) => {
->>>>>>> dev
     const { user } = req;
     const spots = await Spot.findAll({
         where: {
@@ -102,8 +91,6 @@ router.get('/current', requireAuth, async(req, res) => {
     res.json({spots});
     
 })
-<<<<<<< HEAD
-=======
 //add an image to a Spot based on the Spot's id
 router.post('/:spotId/images', requireAuth, async(req, res) => {
     const spotId = req.params.spotId;
@@ -123,7 +110,6 @@ router.post('/:spotId/images', requireAuth, async(req, res) => {
         preview: spotImg.preview
     })
 })
->>>>>>> dev
 
 //get details of a spot from an id:
 router.get('/:spotId', async(req, res) => {
@@ -139,11 +125,7 @@ router.get('/:spotId', async(req, res) => {
 
 
 //Create a new spot:
-<<<<<<< HEAD
-router.post('/', validateSpot, async(req, res) => {
-=======
 router.post('/', requireAuth, validateSpot, async(req, res) => {
->>>>>>> dev
     const { user } = req;
     const ownerId = user.toJSON().id;
     const {address, city, state, country, lat, lng, name, description, price} = req.body;
@@ -154,8 +136,6 @@ router.post('/', requireAuth, validateSpot, async(req, res) => {
     res.json(newSpot);
 })
 
-<<<<<<< HEAD
-=======
 //Edit a spot:
 router.put('/:spotId', validateSpot, async(req, res) => {
     const spotId = req.params.spotId;
@@ -193,6 +173,5 @@ router.put('/:spotId', validateSpot, async(req, res) => {
 
 })
 
->>>>>>> dev
 
 module.exports = router;
