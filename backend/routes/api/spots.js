@@ -70,7 +70,7 @@ router.get('/', async(req, res) => {
         ],
         attributes: {
             //add avgRating for each spot
-            includes: [
+            include: [
                 [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
                 [sequelize.col('SpotImages.url'), 'previewImage']
             ]
