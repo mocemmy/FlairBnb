@@ -16,10 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: 'userId'
       })
       
-      Spot.belongsToMany(models.User, {
-        through: models.Review,
+      Spot.hasMany(models.Review, {
         foreignKey: 'spotId',
-        otherKey: 'userId'
+        onDelete: 'CASCADE',
+        hooks: true
       })
 
       Spot.hasMany(models.SpotImage, {
