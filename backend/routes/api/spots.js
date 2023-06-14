@@ -96,7 +96,13 @@ router.post('/:spotId/images', requireAuth, async(req, res) => {
     const {url, preview} = req.body;
     const spot = await Spot.findByPk(spotId);
     const { user } = req;
-
+    if(!spot){
+        res.statusCode = 404;
+        return res.json({
+            "message": "Spot couldn't be found"
+        })
+    }
+    //require proper authorization
     if(spot.ownerId !== user.id){
         res.statusCode = 403
         res.json({
@@ -104,12 +110,6 @@ router.post('/:spotId/images', requireAuth, async(req, res) => {
         })
     }
 
-    if(!spot){
-        res.statusCode = 404;
-        return res.json({
-            "message": "Spot couldn't be found"
-        })
-    }
 
     let spotImg = await SpotImage.create({spotId, url, preview});
     spotImg = spotImg.toJSON();
