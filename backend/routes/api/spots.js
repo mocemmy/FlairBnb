@@ -187,18 +187,12 @@ router.post('/', requireAuth, validateSpot, async(req, res) => {
 })
 
 //Edit a spot:
-router.put('/:spotId', validateSpot, async(req, res) => {
+router.put('/:spotId', requireAuth, validateSpot, async(req, res) => {
     const spotId = req.params.spotId;
     const {address, city, state, country, lat, lng, name, description, price} = req.body;
     const { user } = req;
     
     const spot = await Spot.findByPk(spotId);
-    if(user.is !== spot.ownerId){
-        res.status = 401
-        return res.json({
-            message: "Spot must belong to the current user"
-        })
-    }
     if(!spot){
         res.statusCode = 404
         return res.json({
@@ -206,6 +200,12 @@ router.put('/:spotId', validateSpot, async(req, res) => {
         })
     }
     
+    if(user.id !== spot.ownerId){
+        res.statusCode = 403
+        return res.json({
+            message: "Forbidden"
+        })
+    }
 
     spot.address = address;
     spot.city = city;
