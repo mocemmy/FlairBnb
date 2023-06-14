@@ -4,6 +4,7 @@ const express = require('express');
 const { Spot, Review, SpotImage, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { requireAuth } = require('../../utils/auth');
 
 const router = express.Router();
 
@@ -51,7 +52,6 @@ const validateSpot = [
 ]
 
 
-
 //GET all spots:
 router.get('/', async(req, res) => {
     //find all spots
@@ -81,7 +81,7 @@ router.get('/', async(req, res) => {
 })
 
 //Get all spots owned by the current user:
-router.get('/current', async(req, res) => {
+router.get('/current', requireAuth, async(req, res) => {
     const { user } = req;
     const spots = await Spot.findAll({
         where: {
@@ -92,7 +92,7 @@ router.get('/current', async(req, res) => {
     
 })
 //add an image to a Spot based on the Spot's id
-router.post('/:spotId/images', async(req, res) => {
+router.post('/:spotId/images', requireAuth, async(req, res) => {
     const spotId = req.params.spotId;
     const {url, preview} = req.body;
     const spot = await Spot.findByPk(spotId);
@@ -125,7 +125,7 @@ router.get('/:spotId', async(req, res) => {
 
 
 //Create a new spot:
-router.post('/', validateSpot, async(req, res) => {
+router.post('/', requireAuth, validateSpot, async(req, res) => {
     const { user } = req;
     const ownerId = user.toJSON().id;
     const {address, city, state, country, lat, lng, name, description, price} = req.body;
@@ -134,6 +134,43 @@ router.post('/', validateSpot, async(req, res) => {
 
     res.statusCode = 201;
     res.json(newSpot);
+})
+
+//Edit a spot:
+router.put('/:spotId', validateSpot, async(req, res) => {
+    const spotId = req.params.spotId;
+    const {address, city, state, country, lat, lng, name, description, price} = req.body;
+    const { user } = req;
+    
+    const spot = await Spot.findByPk(spotId);
+    if(user.is !== spot.ownerId){
+        res.status = 401
+        return res.json({
+            message: "Spot must belong to the current user"
+        })
+    }
+    if(!spot){
+        res.statusCode = 404
+        return res.json({
+            message: "Spot couldn't be found"
+        })
+    }
+    
+
+    spot.address = address;
+    spot.city = city;
+    spot.state = state;
+    spot.country = country;
+    spot.lat = lat;
+    spot.lng = lng;
+    spot.name = name;
+    spot.description = description;
+    spot.price = price;
+
+    await spot.save();
+
+    res.json(spot);
+
 })
 
 
