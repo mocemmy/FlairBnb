@@ -122,6 +122,11 @@ router.get('/current', requireAuth, async(req, res) => {
     
 })
 
+//Get all Bookings for a Spot based on the Spot's id
+router.get('/:spotId/bookings', requireAuth, async(req, res) => {
+    
+})
+
 //Get all Reviews by a Spot's id
 router.get('/:spotId/reviews', async(req, res) => {
     const spotId = req.params.spotId;
