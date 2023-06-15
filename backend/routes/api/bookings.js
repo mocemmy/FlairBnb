@@ -9,7 +9,7 @@ const router = express.Router();
 //Get all of the Current User's Bookings
 router.get('/current', requireAuth, async(req, res) => {
     const { user } = req;
-    const bookings = await Booking.findAll({
+    let Bookings = await Booking.findAll({
         where: {
             userId: user.id
         },
@@ -25,9 +25,16 @@ router.get('/current', requireAuth, async(req, res) => {
                 ]
             },
             
-        ]
+        ],
+        
     })
-    res.json(bookings)
+
+    Bookings = Bookings.map(booking => booking.toJSON());
+    Bookings.forEach(booking => {
+        booking.Spot.previewImage = booking.Spot.SpotImages[0].url;
+        delete booking.Spot.SpotImages
+    })
+    res.json({Bookings})
 })
 
 module.exports = router;
