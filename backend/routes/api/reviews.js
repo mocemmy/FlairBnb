@@ -27,7 +27,6 @@ router.get('/current', requireAuth, async(req, res) => {
                 include: [
                     {
                         model: SpotImage,
-                        as: 'previewImage',
                         attributes: ['url']
                     }
                 ]
@@ -45,7 +44,8 @@ router.get('/current', requireAuth, async(req, res) => {
     });
 
     Reviews.forEach(rev => {
-        rev.Spot.previewImage = rev.Spot.previewImage[0].url
+        rev.Spot.previewImage = rev.Spot.SpotImages[0].url
+        delete rev.Spot.SpotImages
     });
 
 
