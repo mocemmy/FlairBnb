@@ -1,7 +1,7 @@
 const express = require('express');
 // const { Op } = require('sequelize');
 // const bcrypt = require('bcryptjs');
-const { Spot, Review, SpotImage, User, sequelize } = require('../../db/models');
+const { Spot, Review, SpotImage, User, Booking, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
@@ -124,7 +124,36 @@ router.get('/current', requireAuth, async(req, res) => {
 
 //Get all Bookings for a Spot based on the Spot's id
 router.get('/:spotId/bookings', requireAuth, async(req, res) => {
-    
+    const { user } = req;
+    const spot = await Spot.findByPk(req.params.spotId);
+    if(!spot){
+        res.statusCode = 404;
+        return res.json({
+            message: "Spot couldn't be found"
+        })
+    }
+    let Bookings;
+    if(user.id !== spot.ownerId){ //if user is NOT the owner
+        Bookings = await Booking.findAll({
+            where: {
+                spotId: spot.id
+            },
+            attributes: ['spotId', 'startDate', 'endDate']
+        })
+    }
+    if(user.id === spot.ownerId) { //if user owns the spot
+        Bookings = await Booking.findAll({
+            where: {
+                spotId: spot.id
+            },
+            include: [{
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            }]
+        })
+    }
+
+    res.json({Bookings})
 })
 
 //Get all Reviews by a Spot's id
