@@ -141,7 +141,10 @@ router.post('/:reviewId/images', requireAuth, async(req, res) => {
         url,
         reviewId: req.params.reviewId
     })
-    res.json(revImg)
+    res.json({
+        id: revImg.id,
+        url: revImg.url
+    })
 })
 
 
