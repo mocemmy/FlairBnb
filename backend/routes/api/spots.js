@@ -90,6 +90,28 @@ router.get('/current', requireAuth, async(req, res) => {
     res.json({spots});
     
 })
+
+//Get all Reviews by a Spot's id
+router.get('/:spotId/reviews', async(req, res) => {
+    const spotId = req.params.spotId;
+    const spot = await Spot.findByPk(spotId);
+
+    if(!spot){
+        res.statusCode = 404;
+        return res.json({
+            message: "Spot couldn't be found"
+        })
+    }
+
+    const Reviews = await Review.findAll({
+        where: {
+            spotId: spotId
+        }
+    })
+
+    res.json({Reviews});
+})
+
 //add an image to a Spot based on the Spot's id
 router.post('/:spotId/images', requireAuth, async(req, res) => {
     const spotId = req.params.spotId;
@@ -159,12 +181,13 @@ router.post('/', requireAuth, validateSpot, async(req, res) => {
     const { user } = req;
     const ownerId = user.toJSON().id;
     const {address, city, state, country, lat, lng, name, description, price} = req.body;
-
+    
     const newSpot = await Spot.create({ownerId, address, city, state, country, lat, lng, name, description, price})
-
+    
     res.statusCode = 201;
     res.json(newSpot);
 })
+
 
 //Edit a spot:
 router.put('/:spotId', validateSpot, async(req, res) => {
@@ -198,10 +221,11 @@ router.put('/:spotId', validateSpot, async(req, res) => {
     spot.price = price;
 
     await spot.save();
-
+    
     res.json(spot);
-
+    
 })
+
 
 
 module.exports = router;
