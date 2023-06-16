@@ -3,21 +3,10 @@ const { Review, User, Spot, ReviewImage, SpotImage, sequelize } = require('../..
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
+//import custom validations:
+const { validateReview, validateReviewById, unauthorizedUser} = require('../../utils/customValidations');
 
 const router = express.Router();
-
-const validateReview = [
-    check('review')
-        .exists({ checkFalsey: true })
-        .notEmpty()
-        .withMessage('Review text is required'),
-    check('stars')
-        .exists({ checkFalsey: true })
-        .notEmpty()
-        .isInt({min: 1, max: 5})
-        .withMessage("Stars must be an integer from 1 to 5"),
-    handleValidationErrors
-]
 
 //Get all Reviews of the Current User
 router.get('/current', requireAuth, async(req, res) => {
@@ -32,7 +21,6 @@ router.get('/current', requireAuth, async(req, res) => {
                 attributes: ['id', 'firstName', 'lastName']
             },
             {
-                // raw: true,
                 model: Spot,
                 attributes: {
                     exclude: ['updatedAt', 'createdAt'],
@@ -51,17 +39,11 @@ router.get('/current', requireAuth, async(req, res) => {
         ],
         
     })
-    Reviews = Reviews.map(rev => {
-        // console.log(rev.toJSON().Spot.previewImage[0].url)
-        return rev.toJSON();
-    });
-
+    Reviews = Reviews.map(rev => { rev.toJSON()});
     Reviews.forEach(rev => {
         rev.Spot.previewImage = rev.Spot.SpotImages[0].url
         delete rev.Spot.SpotImages
     });
-
-
     res.json({Reviews});
 })
 

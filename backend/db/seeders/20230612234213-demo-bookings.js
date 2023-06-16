@@ -17,7 +17,7 @@ const bookings = [
   },
   {
     spotId: 1,
-    userId: 1,
+    userId: 3,
     startDate: '2023-06-27',
     endDate: '2023-07-05'
   },
