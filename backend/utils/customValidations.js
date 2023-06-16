@@ -25,6 +25,34 @@ function handleDateValidation (req, _res, next){
     next();
 }
 
+const validateSignup = [
+    check('firstName')
+        .exists({ checkFalsey: true })
+        .isLength({ min: 2})
+        .withMessage('Please provide a first name with at least 2 characters.'),
+    check('lastName')
+        .exists({ checkFalsey: true })
+        .isLength({ min: 2})
+        .withMessage('Please provide a last name with at least 2 characters.'),
+    check('email')
+        .exists({checkFalsey: true })
+        .isEmail()
+        .withMessage('Please provide a valid email.'),
+    check('username')
+        .exists({ checkFalsey: true })
+        .isLength({ min: 4})
+        .withMessage('Please provide a username with at least 4 characters.'),
+    check('username')
+        .not()
+        .isEmail()
+        .withMessage('Username cannot be an email.'),
+    check('password')
+        .exists({ checkFalsey: true })
+        .isLength({ min: 6 })
+        .withMessage('Password must be 6 characters or more.'),
+    handleValidationErrors
+];
+
 function checkConflicts (bookingsArr, date, end) {
     let conflicts;
     for(let i = 0; i < bookingsArr.length; i++){
@@ -190,8 +218,10 @@ const unauthorizedUser = function (){
     throw err;
 }
 
+
 module.exports = {
     handleDateValidation,
+    validateSignup,
     validateSpot,
     validateReview,
     validateDateInputs,
