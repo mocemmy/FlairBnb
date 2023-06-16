@@ -10,16 +10,16 @@ options.tableName = 'Bookings';
 
 const bookings = [
   {
-    spotId: 3,
-    userId: 2,
-    startDate: '2023-06-19',
-    endDate: '2023-07-01'
-  },
-  {
     spotId: 1,
     userId: 3,
     startDate: '2023-06-27',
     endDate: '2023-07-05'
+  },
+  {
+    spotId: 3,
+    userId: 2,
+    startDate: '2023-06-19',
+    endDate: '2023-07-01'
   },
   {
     spotId: 5,
