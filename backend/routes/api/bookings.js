@@ -57,7 +57,7 @@ router.delete('/:bookingId', requireAuth, validateBookingById, async(req, res) =
     const { user } = req;
     const booking = await Booking.findByPk(req.params.bookingId);
     const spot = await Spot.findByPk(booking.spotId)
-    if(user.id !== booking.id && user.id !== spot.ownerId){
+    if(user.id !== booking.userId && user.id !== spot.ownerId){
         unauthorizedUser();
     };
     const currentDate = new Date();

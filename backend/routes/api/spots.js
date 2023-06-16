@@ -172,7 +172,7 @@ router.post('/:spotId/bookings', requireAuth, validateSpotById,validateDateInput
         endDate
     })
     
-    res.json({newBooking})
+    res.json(newBooking)
 
 })
 
