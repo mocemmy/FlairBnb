@@ -240,6 +240,42 @@ const validateBookingDateByBookingId = [
     handleDateValidation
 ]
 
+const validateSearchParams = [
+    check('page')
+        .isInt({min: 1, max: 10})
+        .optional()
+        .withMessage("Page must be greater than or equal to 1"),
+    check('size')
+        .isInt({min: 1, max: 20})
+        .optional()
+        .withMessage("Size must be greater than or equal to 1"),
+    check('maxLat')
+        .isNumeric({min: -90, max: 90})
+        .optional()
+        .withMessage("Maximum latitude is invalid"),
+    check('minLat')
+        .isNumeric({min: -90, max: 90})
+        .optional()
+        .withMessage("Minimum latitude is invalid"),
+    check('maxLng')
+        .isNumeric({min: -180, max: 180})
+        .optional()
+        .withMessage("Maximum longitude is invalid"),
+    check('minLng')
+        .isNumeric({min: -180, max: 180})
+        .optional()
+        .withMessage("Minimum longitude is invalid"),
+    check('minPrice')
+        .isNumeric({min: 0})
+        .optional()
+        .withMessage("Minimum price must be greater than or equal to 0"),
+    check('maxPrice')
+        .isNumeric({min: 0})
+        .optional()
+        .withMessage("Maximum price must be greater than or equal to 0"),
+    handleValidationErrors
+]
+
 const validateBookingById = async function (req, res, next) {
     const bookingId = req.params.bookingId;
     const booking = await Booking.findByPk(bookingId);
@@ -310,6 +346,7 @@ module.exports = {
     validateDateInputs,
     validateBookingDate,
     validateBookingDateByBookingId,
+    validateSearchParams,
     validateBookingById,
     validateSpotById,
     validateReviewById,

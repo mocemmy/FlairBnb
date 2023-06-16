@@ -7,7 +7,8 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 const { validationResult } = require('express-validator');
 //import customValidations
-const { handleDateValidation, validateSpot, validateReview, validateDateInputs, validateBookingDate, validateSpotById, unauthorizedUser} = require('../../utils/customValidations');
+const { handleDateValidation, validateSpot, validateReview, validateDateInputs, validateBookingDate, validateSpotById, unauthorizedUser, validateSearchParams} = require('../../utils/customValidations');
+const paginationFunc = require('../../utils/pagination')
 
 const router = express.Router();
 
@@ -15,30 +16,74 @@ const router = express.Router();
 
 
 //GET all spots:
-router.get('/', async(req, res) => {
+router.get('/', validateSearchParams, async(req, res) => {
     //find all spots
-    const spots = await Spot.findAll({
-        include: [
-            {
-                model: Review,
-                attributes: []
-            },
-            {
-                //add previewImage for each spot
-                model: SpotImage,
-                attributes: []
-            }
-        ],
-        attributes: {
-            //add avgRating for each spot
-            include: [
-                [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
-                [sequelize.col('SpotImages.url'), 'previewImage']
-            ]
+    const pagination = paginationFunc(req.query);
+    let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query;
+    let where = {};
+//search query calculations:
+    if(!isNaN(minLat)) where.lat = {[Op.gte]: +minLat}
+    if(!isNaN(maxLat)) where.lat = {[Op.lte]: +maxLat}
+    if(!isNaN(minLat) && !isNaN(maxLat)) {
+        where.lat = {
+            [Op.gte]: +minLat,
+            [Op.lte]: +maxLat
+        }
+    }
+    if(!isNaN(minLng)) where.lng = {[Op.gte]: +minLng}
+    if(!isNaN(maxLng)) where.lng = {[Op.lte]: +maxLng}
+    if(!isNaN(minLng) && !isNaN(maxLng)) {
+        where.lng = {
+            [Op.gte]: +minLng,
+            [Op.lte]: +maxLng
+        }
+    }
+    if(!isNaN(minPrice)) where.Price = {[Op.gte]: +minPrice}
+    if(!isNaN(maxPrice)) where.lng = {[Op.lte]: +maxPrice}
+    if(!isNaN(minPrice) && !isNaN(maxPrice)) {
+        where.Price = {
+            [Op.gte]: +minPrice,
+            [Op.lte]: +maxPrice
+        }
+    }
+
+
+
+
+    let Spots = await Spot.findAll({
+        where,
+       include: [
+        {
+            model: Review,
+            attributes: ['stars']
         },
-        group: ['Spot.id', 'SpotImages.url']
+        {
+            model: SpotImage,
+            attributes: ['url']
+        }],
+        ...pagination,
     });
-    res.json({spots});
+    Spots = Spots.map(spot => spot.toJSON());
+    Spots.forEach(spot => {
+        if(spot.Reviews.length){
+            spot.avgRating = spot.Reviews.reduce((acc, curr) => acc + curr.stars, 0)/ spot.Reviews.length;
+        } else spot.avgRating = null;
+        delete spot.Reviews;
+        if(spot.SpotImages.length){
+            spot.previewImage = spot.SpotImages[0].url;
+        } else spot.previewImage = null;
+        delete spot.SpotImages;
+    })
+
+    
+    
+    page = +page || 1;
+    size = +size || 20;
+    res.json({
+        Spots,
+        page,
+        size
+    });
 })
 
 //Get all spots owned by the current user:
