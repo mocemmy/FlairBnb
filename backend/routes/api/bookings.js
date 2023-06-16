@@ -4,11 +4,9 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 //import custom validations:
-const { validateDateInputs, validateBookingDate, validateBookingDateByBookingId } = require('../../utils/customValidations');
+const { validateDateInputs, validateBookingDate, validateBookingDateByBookingId, unauthorizedUser, validateBookingById } = require('../../utils/customValidations');
 
 const router = express.Router();
-
-
 
 //Get all of the Current User's Bookings
 router.get('/current', requireAuth, async(req, res) => {
@@ -32,7 +30,6 @@ router.get('/current', requireAuth, async(req, res) => {
         ],
         
     })
-
     Bookings = Bookings.map(booking => booking.toJSON());
     Bookings.forEach(booking => {
         booking.Spot.previewImage = booking.Spot.SpotImages[0].url;
@@ -42,21 +39,12 @@ router.get('/current', requireAuth, async(req, res) => {
 })
 
 //Edit a Booking
-router.put('/:bookingId', requireAuth, validateDateInputs, async(req, res) => {
+router.put('/:bookingId', requireAuth, validateBookingById, validateDateInputs, validateBookingDateByBookingId, async(req, res) => {
     const { user } = req; 
     const { startDate, endDate } = req.body;
     const booking = await Booking.findByPk(req.params.bookingId);
-    if(!booking){
-        res.statusCode = 404;
-        return res.json({
-            message: "Booking couldn't be found"
-        })
-    }
     if(user.id !== booking.userId){
-        res.statusCode = 403;
-        res.json({
-            message: "Forbidden"
-        })
+        unauthorizedUser();
     }
     booking.startDate = startDate;
     booking.endDate = endDate;
@@ -65,21 +53,12 @@ router.put('/:bookingId', requireAuth, validateDateInputs, async(req, res) => {
 } )
 
 //Delete a Booking
-router.delete('/:bookingId', requireAuth, async(req, res) => {
+router.delete('/:bookingId', requireAuth, validateBookingById, async(req, res) => {
     const { user } = req;
     const booking = await Booking.findByPk(req.params.bookingId);
-    if(!booking){
-        res.statusCode = 404;
-        return res.json({
-            message: "Booking couldn't be found"
-        })
-    }
     const spot = await Spot.findByPk(booking.spotId)
     if(user.id !== booking.spotId && user.id !== spot.ownerId){
-        res.statusCode = 403;
-        return res.json({
-            message: "Forbidden"
-        })
+        unauthorizedUser();
     };
     const currentDate = new Date();
     if(currentDate >= booking.startDate){
@@ -92,8 +71,6 @@ router.delete('/:bookingId', requireAuth, async(req, res) => {
     res.json({
         message: "Successfully Deleted"
     })
-
-
 })
 
 module.exports = router;

@@ -53,11 +53,23 @@ const validateSignup = [
     handleValidationErrors
 ];
 
-function checkConflicts (bookingsArr, date, end) {
+function checkConflicts (bookingsArr, date) {
     let conflicts;
     for(let i = 0; i < bookingsArr.length; i++){
         const el = bookingsArr[i];
-        if((date >= el.startDate && date <= el.endDate) || (date < el.startDate && end > el.endDate)){
+        if(date >= el.startDate && date <= el.endDate){
+            conflicts = true;
+            break;
+        }
+    }
+    return conflicts;
+}
+
+function checkConflictsInner (bookingsArr, date, end) {
+    let conflicts;
+    for(let i = 0; i < bookingsArr.length; i++){
+        const el = bookingsArr[i];
+        if(date < el.startDate && end > el.endDate){
             conflicts = true;
             break;
         }
@@ -131,6 +143,55 @@ function checkConflicts (bookingsArr, date, end) {
     }),
     handleValidationErrors
 ]
+const validateBookingDateByBookingId = [
+    check('startDate').custom(async (value, { req }) => {
+        const oldBooking = await Booking.findByPk(req.params.bookingId);
+        let bookings = await Booking.findAll({
+            where: {
+                spotId: oldBooking.spotId,
+            },
+            attributes: ['startDate', 'endDate']
+        })
+        bookings = bookings.map(booking => booking.toJSON());
+        let conflicts = checkConflicts(bookings, value);
+        if(conflicts){
+            throw new Error("Start date conflicts with an existing booking")
+        }
+        return true
+    }),
+    check('endDate').custom(async (value, { req }) => {
+        const oldBooking = await Booking.findByPk(req.params.bookingId);
+        let bookings = await Booking.findAll({
+            where: {
+                spotId: oldBooking.spotId,
+            },
+            attributes: ['startDate', 'endDate']
+        })
+        bookings = bookings.map(booking => booking.toJSON());
+        let conflicts = checkConflicts(bookings, value);
+        if(conflicts){
+            throw new Error("End date conflicts with an existing booking")
+        }
+        return true
+    }),
+    check('startDate').custom(async (value, { req }) => {
+        const oldBooking = await Booking.findByPk(req.params.bookingId);
+        const end = req.body.endDate;
+        let bookings = await Booking.findAll({
+            where: {
+                spotId: oldBooking.spotId
+            },
+            attributes: ['startDate', 'endDate']
+        })
+        bookings = bookings.map(booking => booking.toJSON());
+        let conficts = checkConflictsInner(bookings, value, end);
+        if(conficts){
+            throw new Error("Spot unavailable for some time between startDate and endDate")
+        }
+        return true
+    }),
+    handleDateValidation
+]
 
  const validateBookingDate = [
     check('startDate').custom(async (value, { req }) => {
@@ -170,7 +231,7 @@ function checkConflicts (bookingsArr, date, end) {
             attributes: ['startDate', 'endDate']
         })
         bookings = bookings.map(booking => booking.toJSON());
-        let conficts = checkConflicts(bookings, value, end);
+        let conficts = checkConflictsInner(bookings, value, end);
         if(conficts){
             throw new Error("Spot unavailable for some time between startDate and endDate")
         }
@@ -226,6 +287,7 @@ module.exports = {
     validateReview,
     validateDateInputs,
     validateBookingDate,
+    validateBookingDateByBookingId,
     validateBookingById,
     validateSpotById,
     validateReviewById,
