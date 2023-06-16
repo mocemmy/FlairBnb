@@ -1,7 +1,7 @@
 const express = require('express');
 const { Op } = require('sequelize');
 // const bcrypt = require('bcryptjs');
-const { Spot, Review, SpotImage, User, Booking, sequelize } = require('../db/models');
+const { Spot, Review, SpotImage, User, Booking, ReviewImage,sequelize } = require('../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('./validation');
 const { requireAuth } = require('./auth');
@@ -273,6 +273,17 @@ const validateReviewById = async function (req, res, next) {
     return next();
 }
 
+const validateReviewImageById = async function (req, res, next) {
+    const imageId = req.params.imageId;
+    const reviewImage = await ReviewImage.findByPk(imageId);
+    if(!reviewImage) {
+        const err = new Error("Review Image couldn't be found");
+        err.status = 404;
+        return next(err);
+    }
+    return next();
+}
+
 const unauthorizedUser = function (){
     const err = new Error("Forbidden");
     err.status = 403;
@@ -291,5 +302,6 @@ module.exports = {
     validateBookingById,
     validateSpotById,
     validateReviewById,
+    validateReviewImageById,
     unauthorizedUser
 }
