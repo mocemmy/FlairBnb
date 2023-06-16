@@ -89,7 +89,7 @@ router.get('/', validateSearchParams, async(req, res) => {
 //Get all spots owned by the current user:
 router.get('/current', requireAuth, async(req, res) => {
     const { user } = req;
-    const spots = await Spot.findAll({
+    const Spots = await Spot.findAll({
         where: {
             "ownerId": user.toJSON().id
         },
@@ -112,7 +112,7 @@ router.get('/current', requireAuth, async(req, res) => {
         group: ['Spot.id', 'SpotImages.url']
 
     })
-    res.json({spots});
+    res.json({Spots});
     
 })
 
