@@ -284,6 +284,17 @@ const validateReviewImageById = async function (req, res, next) {
     return next();
 }
 
+const validateSpotImageById = async function (req, res, next) {
+    const imageId = req.params.imageId;
+    const spotImage = await SpotImage.findByPk(imageId);
+    if(!spotImage) {
+        const err = new Error("Spot Image couldn't be found");
+        err.status = 404;
+        return next(err);
+    }
+    return next();
+}
+
 const unauthorizedUser = function (){
     const err = new Error("Forbidden");
     err.status = 403;
@@ -303,5 +314,6 @@ module.exports = {
     validateSpotById,
     validateReviewById,
     validateReviewImageById,
+    validateSpotImageById,
     unauthorizedUser
 }
