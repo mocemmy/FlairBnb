@@ -228,10 +228,7 @@ router.post('/:spotId/reviews', requireAuth, validateSpotById, validateReview, a
         stars
     })
     res.statusCode = 201;
-    res.json({
-        review: newReview.review,
-        stars: newReview.stars
-    })
+    res.json(newReview);
 })
 
 //get details of a spot from an id:
