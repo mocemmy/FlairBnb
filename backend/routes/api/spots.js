@@ -1,7 +1,7 @@
 const express = require('express');
 const { Op } = require('sequelize');
 // const bcrypt = require('bcryptjs');
-const { Spot, Review, SpotImage, User, Booking, sequelize } = require('../../db/models');
+const { Spot, Review, ReviewImage, SpotImage, User, Booking, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
@@ -151,7 +151,16 @@ router.get('/:spotId/reviews', validateSpotById, async(req, res) => {
     const Reviews = await Review.findAll({
         where: {
             spotId: spotId
-        }
+        },
+        include: [{
+            model: User,
+            attributes: ['id', 'firstName', 'lastName']},
+            {
+                model: ReviewImage,
+                attributes: ['id', 'url']
+
+            }
+        ]
     })
 
     res.json({Reviews});
