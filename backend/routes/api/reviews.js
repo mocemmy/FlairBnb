@@ -40,7 +40,6 @@ router.get('/current', requireAuth, async(req, res) => {
     
     Reviews = Reviews.map(rev => rev.toJSON());
     Reviews.forEach(rev => {
-        console.log('here ----------',rev.Spot)
         rev.Spot.previewImage = rev.Spot.SpotImages[0].url
         delete rev.Spot.SpotImages
     });
