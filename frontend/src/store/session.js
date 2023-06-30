@@ -50,7 +50,15 @@ export const signup = (user) => async (dispatch) => {
     const data = await response.json();
     dispatch(actionLogIn(data.user));
     return response;
-  };
+};
+
+export const logout = () => async (dispatch) => {
+    const response = await csrfFetch('/api/session', {
+      method: 'DELETE',
+    });
+    dispatch(actionLogOut());
+    return response;
+};
 
 const initialState = { user: null };
 
