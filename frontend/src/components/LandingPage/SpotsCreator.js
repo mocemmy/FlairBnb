@@ -1,7 +1,14 @@
+import {useHistory} from 'react-router-dom';
+
 function SpotsCreator ({spot}) {
-    console.log(spot)
+    const history = useHistory();
+    const onClick = (e) => {
+        history.push(`/spots/${spot.id}`)
+    }
     return (
-        <ul key={spot.id} className='grid-item'>
+        <div key={spot.id} className='grid-item'
+        onClick={e => onClick(e)}
+        >
             <div 
             className="image-container"
             style={{
@@ -10,10 +17,11 @@ function SpotsCreator ({spot}) {
             }}
             >
             </div>
-            
+            <ul>
             <li>{spot.city}</li>
             <li>{spot.state}</li>
-        </ul>
+            </ul>
+        </div>
     )
 }
 export default SpotsCreator;

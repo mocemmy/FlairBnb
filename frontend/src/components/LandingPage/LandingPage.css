@@ -1,14 +1,10 @@
 .spots-container {
-   display: grid;
-   grid-template-columns: 2;
-   grid-template-rows: 3;
+    margin-top: 5rem;
 }
 
 .grid-item {
-    border: 1px solid red;
     box-sizing: border-box;
     width: fit-content;
-    padding: 2rem;
 }
 
 .image-container {
@@ -21,4 +17,14 @@
 }
 .image-container img {
     object-fit: cover;
+}
+
+.spots-list {
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.grid-item:hover {
+    cursor: pointer;
 }
