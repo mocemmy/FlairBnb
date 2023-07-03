@@ -49,14 +49,14 @@ function ProfileButton({ user }) {
         {user ? (
           <>
             {user ? (
-          <div className="user-info-container">
+          <>
             <li>{user.username}</li>
                 <li>{user.firstName} {user.lastName}</li>
                 <li>{user.email}</li>
                 <li>
                   <button onClick={logout}>Log Out</button>
                 </li>
-          </div>
+          </>
         ) : (
           <div className="logIn-signUp-container">
             <OpenModalMenuItem

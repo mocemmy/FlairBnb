@@ -49,16 +49,7 @@ button {
     margin-bottom: 0.5rem;
 }
 
-/* .profile-dropdown {
-    border: 1px solid rgba(211, 211, 211, 0.5);
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 4.5rem;
-    right: 3rem;
-} */
-
-.user-info-container {
+.profile-dropdown {
     border: 1px solid rgba(211, 211, 211, 0.5);
     border-radius: 0.25rem;
     position: absolute;
@@ -66,6 +57,7 @@ button {
     right: 3rem;
     padding: 1rem;
 }
+
 
 
 .hidden {
