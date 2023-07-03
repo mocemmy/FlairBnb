@@ -25,8 +25,9 @@ function LoginFormModal() {
       });
   };
 
-  const disabled = () => {
-    return credential.length < 4 || password.length < 6 ? true : false;
+  const demoUser = () => {
+    setCredential("demo@user.io")
+    setPassword("password")
   }
 
   return (
@@ -54,6 +55,7 @@ function LoginFormModal() {
         {errors.credential && (
           <p>{errors.credential}</p>
         )}
+        <button type="submit" onClick={demoUser}>Log in as Demo User</button>
         <button type="submit" disabled={credential.length < 4 || password.length < 6 ? true : false}>Log In</button>
       </form>
     </>
