@@ -1,5 +1,7 @@
 .spots-container {
     margin-top: 5rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
 }
 
 .grid-item {
@@ -8,8 +10,8 @@
 }
 
 .image-container {
-    height: 20rem;
-    width: 20rem;
+    height: 15rem;
+    width: 15rem;
     overflow: hidden;
     position: relative;
     border-radius: 1rem;
@@ -23,9 +25,33 @@
     display: grid;
     grid-gap: 2rem;
     /* grid-template-columns: repeat(6, 1fr); */
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
 }
 
 .grid-item:hover {
     cursor: pointer;
+}
+
+
+.spot-location {
+    font-weight: bold;
+}
+
+.spot-info-container {
+    width: 15rem;
+    box-sizing: border-box;
+    padding: 0;
+}
+.star-rating {
+    text-align: end;
+}
+
+.city-star-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+.price {
+    font-weight: bold;
 }

@@ -1,6 +1,7 @@
 import {useHistory} from 'react-router-dom';
 import {useState} from 'react';
 import './tooltip.css';
+import StarRating from './StarRating';
 
 function SpotsCreator ({spot}) {
     const history = useHistory();
@@ -16,6 +17,7 @@ function SpotsCreator ({spot}) {
     const onClick = (e) => {
         history.push(`/spots/${spot.id}`)
     }
+
     return (
         <div key={spot.id} className='grid-item'
         onClick={e => onClick(e)}
@@ -31,9 +33,12 @@ function SpotsCreator ({spot}) {
             >
             {showTip && <p className={hidden}>{spot.name}</p>}
             </div>
-            <ul>
-            <li>{spot.city}</li>
-            <li>{spot.state}</li>
+            <ul className='spot-info-container'>
+                <div className='city-star-container'>
+            <li className='spot-location'>{spot.city}, {spot.state}</li>
+            <StarRating spot={spot} />
+                </div>
+            <li><span className="price">${spot.price}</span> night</li>
             </ul>
         </div>
     )
