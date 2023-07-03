@@ -16,6 +16,7 @@ a {
     top: 5rem;
     right: 3rem;
     padding: 1rem;
+    background-color: white;
 }
 
 li#profile-button-container {
@@ -69,9 +70,10 @@ button:disabled {
     top: 4.5rem;
     right: 3rem;
     padding: 1rem;
+    background-color: white;
 }
-
 
 .hidden {
     display: none;
 }
+
