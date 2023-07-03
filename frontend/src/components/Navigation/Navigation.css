@@ -27,11 +27,15 @@ ul {
 }
 
 img {
-    height: 1rem;
-    margin: 1rem;
+    height: 1.25rem;
+    margin-left: 1rem;
+}
+.logo {
+    margin-left: 3rem;
 }
 
 button {
     margin: 1rem;
+    margin-right: 3rem;
     background-color: #ff5a5f;
 }

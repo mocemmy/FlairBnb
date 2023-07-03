@@ -13,7 +13,7 @@ function Navigation({ isLoaded }){
   return (
     <ul>
       <li>
-        <NavLink exact to="/"><img src={imageLogo} alt="logo"/><img src={name} alt="flairbnb"/></NavLink>
+        <NavLink exact to="/"><img className='logo' src={imageLogo} alt="logo"/><img src={name} alt="flairbnb"/></NavLink>
       </li>
       {isLoaded && (
         <li>
