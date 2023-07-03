@@ -1,0 +1,24 @@
+.spots-container {
+   display: grid;
+   grid-template-columns: 2;
+   grid-template-rows: 3;
+}
+
+.grid-item {
+    border: 1px solid red;
+    box-sizing: border-box;
+    width: fit-content;
+    padding: 2rem;
+}
+
+.image-container {
+    height: 20rem;
+    width: 20rem;
+    overflow: hidden;
+    position: relative;
+    border-radius: 1rem;
+    border: 1px solid rgb(211, 211, 211);
+}
+.image-container img {
+    object-fit: cover;
+}
