@@ -11,16 +11,16 @@ function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
 
   return (
-    <ul>
+    <nav id="nav-bar-container">
       <li>
         <NavLink exact to="/"><img className='logo' src={imageLogo} alt="logo"/><img src={name} alt="flairbnb"/></NavLink>
       </li>
       {isLoaded && (
-        <li>
+        <li id="profile-button-container">
           <ProfileButton user={sessionUser} />
         </li>
       )}
-    </ul>
+    </nav>
   );
 }
 

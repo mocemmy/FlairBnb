@@ -11,13 +11,13 @@ function ProfileButton({ user }) {
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
-  const openMenu = () => {
+  const openMenu = () => { //opens the dropdown
     if (showMenu) return;
     setShowMenu(true);
   };
 
   useEffect(() => {
-    if (!showMenu) return;
+    if (!showMenu) return; //if menu is already hidden, do nothing
 
     const closeMenu = (e) => {
       if (!ulRef.current.contains(e.target)) {
@@ -27,8 +27,8 @@ function ProfileButton({ user }) {
 
     document.addEventListener('click', closeMenu);
 
-    return () => document.removeEventListener("click", closeMenu);
-  }, [showMenu]);
+    return () => document.removeEventListener("click", closeMenu); //clean up function
+  }, [showMenu]); //will run whenever menu is opened or closed
 
   const closeMenu = () => setShowMenu(false);
 
@@ -37,26 +37,26 @@ function ProfileButton({ user }) {
     dispatch(sessionActions.logout());
     closeMenu();
   };
-
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  
 
   return (
     <>
       <button onClick={openMenu} className="user-button">
-        <i className="fas fa-user-circle" />
+      <i class="fa-regular fa-user"></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
             {user ? (
-          <>
+          <div className="user-info-container">
             <li>{user.username}</li>
                 <li>{user.firstName} {user.lastName}</li>
                 <li>{user.email}</li>
                 <li>
                   <button onClick={logout}>Log Out</button>
                 </li>
-          </>
+          </div>
         ) : (
           <div className="logIn-signUp-container">
             <OpenModalMenuItem

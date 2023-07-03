@@ -1,18 +1,21 @@
-.hidden {
-    display: none;
-}
 
 li {
     list-style-type: none;
     text-decoration: none;
 }
+/* #profile-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+} */
 
 a {
     text-decoration: none;
     padding: 0.5rem;
 }
 
-ul {
+#nav-bar-container {
     display: flex;
     border-bottom: 1px solid rgba(211, 211, 211, 0.5);
     width: 100%;
@@ -46,17 +49,25 @@ button {
     margin-bottom: 0.5rem;
 }
 
-.profile-dropdown {
-    display: flex;
-    flex-direction: column;
-}
-
-.logIn-signUp-container {
+/* .profile-dropdown {
     border: 1px solid rgba(211, 211, 211, 0.5);
     justify-content: center;
     align-items: center;
     position: absolute;
-    padding: 1rem;
     top: 4.5rem;
     right: 3rem;
+} */
+
+.user-info-container {
+    border: 1px solid rgba(211, 211, 211, 0.5);
+    border-radius: 0.25rem;
+    position: absolute;
+    top: 4.5rem;
+    right: 3rem;
+    padding: 1rem;
+}
+
+
+.hidden {
+    display: none;
 }
