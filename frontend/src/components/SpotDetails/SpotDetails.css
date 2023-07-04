@@ -1,3 +1,33 @@
 .spot-details {
     margin-top: 5rem;
+    width: 60%;
+    margin: auto;
 }
+
+.images-container {
+    margin: auto;
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    grid-template-rows: 1fr ;
+    gap: 0.5rem;
+    height: 30rem;
+    border-radius: 1rem;
+}
+
+.main-image {
+    overflow: hidden;
+    border-radius: 1rem 0rem 0rem 1rem ;
+}
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 0.5rem;
+    border-radius: 0 1rem 1rem 0;
+    overflow: hidden;
+}
+/* 
+.main-image:hover,
+.image-grid:hover {
+    cursor: pointer;
+} */

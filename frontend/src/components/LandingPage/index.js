@@ -5,18 +5,15 @@ import { thunkGetAllSpots } from '../../store/spots';
 import SpotsCreator from './SpotsCreator';
 import './LandingPage.css';
 
-function LandingPage({ isLoaded }) {
+function LandingPage() {
     const dispatch = useDispatch();
-    const spotsObj = useSelector(state => state.spots.allSpots);
-    const spots = Object.values(spotsObj);
-    console.log(spots);
+    const spots = Object.values(useSelector(state => state.spots.allSpots));
     //load spots on mount:
     useEffect(() => {
         dispatch(thunkGetAllSpots());
     }, [dispatch])
     
-
-    if(!spots) return null
+    if(!spots.length) return null
     return (
         <div className='spots-container'>
             <div className='spots-list'>

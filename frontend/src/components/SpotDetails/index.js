@@ -22,18 +22,32 @@ const SpotDetails = () => {
         <div className='spot-details'>
             <h1>{spotDetails.name}</h1>
             <div className='images-container'>
-                <img src={spotDetails.SpotImages[0].url}/>
+                <div className="main-image" 
+                style={{
+                        backgroundImage: `url(${spotDetails.SpotImages[0].url})`,
+                        backgroundSize: 'cover'
+                    }}/>
                 <div className='image-grid'>
-                    {spotDetails.SpotImages[1] && <img src={spotDetails.SpotImages[1].url} alt='image not found'/>}
-                </div>
-                <div className='image-grid'>
-                    {spotDetails.SpotImages[2] && <img src={spotDetails.SpotImages[2].url} alt='image not found'/>}
-                </div>
-                <div className='image-grid'>
-                    {spotDetails.SpotImages[3] && <img src={spotDetails.SpotImages[3].url} alt='image not found'/>}
-                </div>
-                <div className='image-grid'>
-                    {spotDetails.SpotImages[4] && <img src={spotDetails.SpotImages[4].url} alt='image not found'/>}
+                    {spotDetails.SpotImages[1] && <div 
+                    style={{
+                        backgroundImage: `url(${spotDetails.SpotImages[1].url})`,
+                        backgroundSize: 'cover'
+                    }}
+                     className="secondary-image" />}
+                    {spotDetails.SpotImages[2] && <div 
+                    style={{
+                        backgroundImage: `url(${spotDetails.SpotImages[2].url})`,
+                        backgroundSize: 'cover'
+                    }} className="secondary-image" />}
+                    {spotDetails.SpotImages[3] && <div className="secondary-image" style={{
+                        backgroundImage: `url(${spotDetails.SpotImages[3].url})`,
+                        backgroundSize: 'cover'
+                    }}/>}
+                    {spotDetails.SpotImages[4] && <div 
+                    style={{
+                        backgroundImage: `url(${spotDetails.SpotImages[4].url})`,
+                        backgroundSize: 'cover'
+                    }} className="secondary-image" />}
                 </div>
             </div>
             <div className='spot-info'>
