@@ -21,6 +21,7 @@ const reviewsReducer = (state = initialState, action ) => {
     switch (action.type) {
         case GET_REVIEWS_FOR_SPOT: 
             newState = { ...state };
+            newState.spot = {};
             action.reviews.map(rev => newState.spot[rev.id] = rev);
             return newState;
         default:

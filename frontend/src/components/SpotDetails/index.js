@@ -40,7 +40,7 @@ const SpotDetails = () => {
       </div>
     </div>
     <div>
-        <RatingsReviews />
+        <RatingsReviews numReviews={spotDetails.numReviews} avgRating={spotDetails.avgStarRating}/>
     </div>
     </>
   );
