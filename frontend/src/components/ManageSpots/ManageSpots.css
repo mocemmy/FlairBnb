@@ -1,0 +1,9 @@
+.spots-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.spot-management-container{
+    width: fit-content;
+
+}

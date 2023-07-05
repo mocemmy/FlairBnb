@@ -5,6 +5,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
 import SpotDetails from "./components/SpotDetails";
+import ManageSpots from "./components/ManageSpots";
 
 
 function App() {
@@ -21,6 +22,12 @@ function App() {
         <Switch>
           <Route exact path="/">
             <LandingPage />
+          </Route>
+          <Route path='/spots/current'>
+              <ManageSpots />
+          </Route>
+          <Route path='/spots/new'>
+             <h1>Create a new spot page</h1>
           </Route>
           <Route path='/spots/:spotId'>
             <SpotDetails />

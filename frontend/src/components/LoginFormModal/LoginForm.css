@@ -1,15 +1,30 @@
 .login-container {
-    padding: 1rem;
+    margin: 2rem;
+    width: 90%;
+    margin: auto;
 }
 
-button {
+.submit-button {
     width: 100%;
+    margin-top: 1rem;
 }
 
-input {
-   margin: 0.5rem;
+.input {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+   width: 96%;
 }
 
 #modal-content {
     border-radius: 1rem;
+    width: 30rem;
 }
+ .login-label {
+    width: fit-content;
+    margin: auto;
+    padding: 1.5rem;
+ }
+
+ .errors {
+    color: red;
+ }

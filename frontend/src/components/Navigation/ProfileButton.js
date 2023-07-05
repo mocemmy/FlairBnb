@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import * as sessionActions from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
@@ -45,6 +45,7 @@ function ProfileButton({ user }) {
 
   return (
     <>
+    {user && <Link id="create-spot-link" to="/spots/new">Create a New Spot</Link>}
       <button onClick={openMenu} className="user-button">
         <i className="fa-regular fa-user"></i>
       </button>
@@ -56,6 +57,11 @@ function ProfileButton({ user }) {
                 <li>Hello {user.firstName}</li>
                 <li>{user.username}</li>
                 <li>{user.email}</li>
+                <li>
+                  <div id="manage-spots-link-container">
+                <Link id="manage-spots-link" to="/spots/current">Manage Spots</Link>
+                  </div>
+                </li>
                 <li>
                   <button onClick={logout}>Log Out</button>
                 </li>
