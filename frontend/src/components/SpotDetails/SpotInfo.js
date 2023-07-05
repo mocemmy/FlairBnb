@@ -2,7 +2,7 @@ const SpotInfo = ({ spot }) => {
     const onClick = () => {
         window.alert("Feature coming soon");
       };
-      const price = spot.price.toFixed(2);
+      const price = parseInt(spot.price).toFixed(2);
   return (
     <>
       <div className="spot-info">

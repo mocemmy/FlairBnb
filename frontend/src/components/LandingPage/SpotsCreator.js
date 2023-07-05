@@ -17,7 +17,7 @@ function SpotsCreator ({spot}) {
     const onClick = (e) => {
         history.push(`/spots/${spot.id}`)
     }
-    const price = spot.price.toFixed(2);
+    const price = parseInt(spot.price).toFixed(2);
     return (
         <div key={spot.id} className='grid-item'
         onClick={e => onClick(e)}
