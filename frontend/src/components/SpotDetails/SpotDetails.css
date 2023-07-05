@@ -2,6 +2,7 @@
     margin: auto;
     margin-top: 5rem;
     max-width: 1000px;
+    margin-bottom: 2rem;
 }
 
 h1 {
@@ -10,58 +11,13 @@ h1 {
     font-size: 2rem;
 }
 
-/* div > img {
-    margin-left: 0;
-    flex: 1;
-    min-width: 100%;
-    min-height: 100%;
-} */
 
-/* .images-container {
+.reviews-container {
+    width: 1000px;
     margin: auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-    gap: 1rem;
-    height: 30rem;
-    border-radius: 1rem;
-    overflow: hidden;
-    width: 100%;
-} */
-/* .images-container > div > div {
-    border: 1px solid green;
-    width: 100%;
-} */
-/* .main-image-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    border: 1px solid red;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(211, 211, 211, 0.5)
 }
-#main-image {
-    flex: 1;
-    width: null;
-    height: null;
-    resize: contain;
-} */
-/* .image-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 0.5rem;
-    border-radius: 0 1rem 1rem 0;
-    overflow: hidden;
-} */
-
-/* .secondary-image-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 1rem;
-} */
-
-
 
 .spot-info-container {
     display: flex;

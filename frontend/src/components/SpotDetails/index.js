@@ -18,6 +18,11 @@ const SpotDetails = () => {
     dispatch(thunkGetSpotDetails(spotId));
   }, [dispatch]);
 
+    let revCount = spotDetails.numReviews;
+    let avgStars = spotDetails.avgStarRating;
+    if(!spotDetails.numReviews) revCount = "new";
+    if(!spotDetails.avgStarRating) avgStars = 0;
+
   const imageArr = spotDetails.SpotImages;
 
   if (!spotDetails.id) return <Loading />;
@@ -39,8 +44,9 @@ const SpotDetails = () => {
         <SpotInfo spot={spotDetails}/>
       </div>
     </div>
-    <div>
-        <RatingsReviews numReviews={spotDetails.numReviews} avgRating={spotDetails.avgStarRating}/>
+    <div className="reviews-container">
+        <h2><i className="fa-solid fa-star"></i>{avgStars} {revCount} reviews</h2>
+        <RatingsReviews />
     </div>
     </>
   );
