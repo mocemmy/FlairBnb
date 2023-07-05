@@ -17,7 +17,7 @@ function SpotsCreator ({spot}) {
     const onClick = (e) => {
         history.push(`/spots/${spot.id}`)
     }
-
+    const price = spot.price.toFixed(2);
     return (
         <div key={spot.id} className='grid-item'
         onClick={e => onClick(e)}
@@ -38,7 +38,7 @@ function SpotsCreator ({spot}) {
             <li className='spot-location'>{spot.city}, {spot.state}</li>
             <StarRating spot={spot} />
                 </div>
-            <li><span className="price">${spot.price.toFixed(2)}</span> night</li>
+            <li><span className="price">${price}</span> night</li>
             </ul>
         </div>
     )

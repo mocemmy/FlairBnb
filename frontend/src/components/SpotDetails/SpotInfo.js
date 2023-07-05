@@ -2,7 +2,7 @@ const SpotInfo = ({ spot }) => {
     const onClick = () => {
         window.alert("Feature coming soon");
       };
-      console.log('spot details:',spot)
+      const price = spot.price.toFixed(2);
   return (
     <>
       <div className="spot-info">
@@ -14,7 +14,7 @@ const SpotInfo = ({ spot }) => {
       <div className="reserve">
         <div className="price-reviews-container">
           <p>
-            <span id="price">${spot.price.toFixed(2)}</span> night
+            <span id="price">${price}</span> night
           </p>
           <p id="stars">
             <i className="fa-solid fa-star"></i>{" "}
