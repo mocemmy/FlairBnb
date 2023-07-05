@@ -7,6 +7,7 @@ import Loading from "../Loading";
 import SpotInfo from "./SpotInfo";
 import SpotImages from "./SpotImages";
 import './Images.css';
+import RatingsReviews from "./RatingsReviews";
 
 const SpotDetails = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const SpotDetails = () => {
 
   if (!spotDetails.id) return <Loading />;
   return (
+    <>
     <div className="spot-details">
       <div className="spot-header-container">
         <h1>{spotDetails.name}</h1>
@@ -37,6 +39,10 @@ const SpotDetails = () => {
         <SpotInfo spot={spotDetails}/>
       </div>
     </div>
+    <div>
+        <RatingsReviews />
+    </div>
+    </>
   );
 };
 
