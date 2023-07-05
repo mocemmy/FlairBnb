@@ -1,130 +1,15 @@
-/* * {
-    font-family: sans-serif;
-    font-size: medium;
-}
-.credentials {
-    padding: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.login-container {
+    padding: 1rem;
 }
 
-.formContainer {
- display: flex;
- flex-direction: column;
- justify-content: center;
- align-items: center;
+button {
+    width: 100%;
 }
 
 input {
-    border: 1px solid gray;
-    border-radius: 0.25rem;
-    padding: 0.5rem;
-    margin-left: 0.25rem;
-    width: 80%;
+   margin: 0.5rem;
 }
 
-.login-card-container {
-    margin: auto;
-    width: fit-content;
-    padding: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border: 1px solid gray;
-    border-radius: 0.5rem;
-    box-shadow: 0.25rem 0.25rem rgba(211, 211, 211, 0.25);
-}
-
-.inputs-container {
-    display: flex;
-    flex-direction: column;
-}
-
-h1{
-    text-align: center;  
-    font-size: large;
-}
-
-button {
-   padding: 0.5rem;
-   background-color: #2c70c9;
-   color: white;
-   border: none;
-   border-radius: 0.25rem;
-}
-.button-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-p {
-    text-align: center;
-} */
-
-* {
-    font-family: sans-serif;
-    font-size: medium;
-}
-
-h1{
-    text-align: center;  
-    font-size: large;
-}
-
-button {
-    padding: 0.5rem;
-    background-color: #ff5a5f;
-    color: white;
-    border: none;
-    border-radius: 0.25rem;
- }
- .button-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
- .login-card-container {
-    margin: auto;
-    width: fit-content;
-    padding: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border: 1px solid gray;
-    border-radius: 0.5rem;
-    box-shadow: 0.25rem 0.25rem rgba(211, 211, 211, 0.25);
- }
-
- input {
-    border: 1px solid gray;
-    border-radius: 0.25rem;
-    padding: 0.5rem;
-    margin-left: 0.25rem;
-    width: fit-content;
-}
-.formContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-   }
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-}
-
-label {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0.5rem;
+#modal-content {
+    border-radius: 1rem;
 }
