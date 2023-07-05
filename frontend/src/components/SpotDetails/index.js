@@ -18,10 +18,10 @@ const SpotDetails = () => {
     dispatch(thunkGetSpotDetails(spotId));
   }, [dispatch]);
 
-    let revCount = spotDetails.numReviews;
-    let avgStars = spotDetails.avgStarRating;
-    if(!spotDetails.numReviews) revCount = "new";
-    if(!spotDetails.avgStarRating) avgStars = 0;
+    let revCount = parseInt(spotDetails.numReviews).toFixed(0);
+    let avgStars = parseInt(spotDetails.avgStarRating).toFixed(2);
+    if(!spotDetails.numReviews) revCount = 0;
+    if(!spotDetails.avgStarRating) avgStars = "new";
 
   const imageArr = spotDetails.SpotImages;
 
