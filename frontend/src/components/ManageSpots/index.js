@@ -31,8 +31,8 @@ const ManageSpots = () => {
             </div>
             <div className='spots-container'>
                 {spots.map(spot => (
-                    <div className='spot-management-container'>
-                    <SpotsCreator key={spot.id} spot={spot} />
+                    <div key={spot.id} className='spot-management-container'>
+                    <SpotsCreator spot={spot} />
                     <div className='button-container'>
                        <li>
                         <OpenModalButton

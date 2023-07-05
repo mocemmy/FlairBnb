@@ -47,6 +47,7 @@ const reviewsReducer = (state = initialState, action ) => {
         case DELETE_REVIEW:
             newState = { ...state }
             delete newState.spot[action.reviewId]
+            console.log(state, newState)
             return newState;
         default:
             return state;
