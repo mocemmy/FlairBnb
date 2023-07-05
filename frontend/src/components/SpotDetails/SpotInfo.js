@@ -3,6 +3,10 @@ const SpotInfo = ({ spot }) => {
         window.alert("Feature coming soon");
       };
       const price = parseInt(spot.price).toFixed(2);
+
+      let avgRating = parseInt(spot.avgStarRating).toFixed(2);
+
+      if(!spot.avgStarRating) avgRating = "new";
   return (
     <>
       <div className="spot-info">
@@ -18,11 +22,7 @@ const SpotInfo = ({ spot }) => {
           </p>
           <p id="stars">
             <i className="fa-solid fa-star"></i>{" "}
-            {spot.avgStarRating ? (
-              <span>{spot.avgStarRating}</span>
-            ) : (
-              <span>0 </span>
-            )}
+            {avgRating}
             <span id="num-revs">-{spot.numReviews}</span>
           </p>
         </div>

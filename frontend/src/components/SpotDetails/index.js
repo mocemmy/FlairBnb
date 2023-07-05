@@ -46,6 +46,7 @@ const SpotDetails = () => {
     </div>
     <div className="reviews-container">
         <h2><i className="fa-solid fa-star"></i>{avgStars} {revCount} reviews</h2>
+        {revCount === 0 && <p>No reviews yet</p>}
         <RatingsReviews />
     </div>
     </>
