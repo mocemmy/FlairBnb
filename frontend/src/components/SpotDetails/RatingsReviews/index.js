@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from 'react';
 import { thunkGetRevsForSpot } from '../../../store/reviews';
 import ReviewCreator from "./ReviewCreator";
+import './RatingsReviews.css';
 
 const RatingsReviews = () => { 
     //fetch reviews from database

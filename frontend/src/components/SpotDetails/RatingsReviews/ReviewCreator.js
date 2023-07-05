@@ -1,8 +1,12 @@
 const ReviewCreator = ({review}) => {
-    console.log(review.firstName, review.lastName)
+    console.log()
     return (
         <div className="review-content">
-            <h1>Review content here</h1>
+            <div className="review-heading">
+                <h5>{review.User.firstName}</h5>
+                <h6>{review.createdAt}</h6>
+                <p>{review.review}</p>
+            </div>
         </div>
     )
 }
