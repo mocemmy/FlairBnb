@@ -24,8 +24,11 @@
 .spots-list {
     display: grid;
     grid-gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(max(25%, 10rem), 1fr))
 }
+/* .grid-item:nth-child(4n + 1){
+    grid-column: 1;
+} */
 
 .grid-item:hover {
     cursor: pointer;

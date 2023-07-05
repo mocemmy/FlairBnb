@@ -1,7 +1,7 @@
 .spot-details {
-    margin-top: 5rem;
-    width: 60%;
     margin: auto;
+    margin-top: 5rem;
+    max-width: 1000px;
 }
 
 h1 {
@@ -10,34 +10,58 @@ h1 {
     font-size: 2rem;
 }
 
-.images-container {
+/* div > img {
+    margin-left: 0;
+    flex: 1;
+    min-width: 100%;
+    min-height: 100%;
+} */
+
+/* .images-container {
     margin: auto;
     display: grid;
-    grid-template-columns: 2fr 2fr;
-    grid-template-rows: 1fr ;
-    gap: 0.5rem;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 1rem;
     height: 30rem;
     border-radius: 1rem;
-}
-
-.main-image {
     overflow: hidden;
-    border-radius: 1rem 0rem 0rem 1rem ;
+    width: 100%;
+} */
+/* .images-container > div > div {
+    border: 1px solid green;
+    width: 100%;
+} */
+/* .main-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid red;
 }
-.image-grid {
+#main-image {
+    flex: 1;
+    width: null;
+    height: null;
+    resize: contain;
+} */
+/* .image-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
     gap: 0.5rem;
     border-radius: 0 1rem 1rem 0;
     overflow: hidden;
-}
+} */
 
-.main-image:hover,
-.secondary-image:hover {
-    cursor: pointer;
-    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
-}
+/* .secondary-image-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 1rem;
+} */
+
+
 
 .spot-info-container {
     display: flex;
@@ -60,17 +84,10 @@ h1 {
 .reserve-button:hover {
     cursor: pointer;
 }
-/* 
-.spot-info {
-} */
 
 #price {
     font-weight: bold;
 }
-/* 
-.spot-header-container {
-
-} */
 
 .price-reviews-container {
     display: flex;

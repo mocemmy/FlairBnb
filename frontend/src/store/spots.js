@@ -26,7 +26,6 @@ export const thunkGetSpotDetails = (spotId) => async (dispatch) => {
 
     if(res.ok) {
         const spot = await res.json();
-        console.log('thunk spot',spot)
         dispatch(actionGetSpotDetails(spot));
     }
 } 

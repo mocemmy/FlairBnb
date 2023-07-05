@@ -38,7 +38,7 @@ function SpotsCreator ({spot}) {
             <li className='spot-location'>{spot.city}, {spot.state}</li>
             <StarRating spot={spot} />
                 </div>
-            <li><span className="price">${spot.price}</span> night</li>
+            <li><span className="price">${spot.price.toFixed(2)}</span> night</li>
             </ul>
         </div>
     )

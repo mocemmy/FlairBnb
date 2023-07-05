@@ -13,7 +13,7 @@ function Navigation({ isLoaded }){
   return (
     <nav id="nav-bar-container">
       <li>
-        <NavLink exact to="/"><img className='logo' src={imageLogo} alt="logo"/><img src={name} alt="flairbnb"/></NavLink>
+        <NavLink exact to="/"><img className='logo' src={imageLogo} alt="logo"/><img className="logo-name" src={name} alt="flairbnb"/></NavLink>
       </li>
       {isLoaded && (
         <li id="profile-button-container">
