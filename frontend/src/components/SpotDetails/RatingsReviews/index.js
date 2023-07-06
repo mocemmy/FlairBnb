@@ -5,12 +5,12 @@ import { thunkGetRevsForSpot } from '../../../store/reviews';
 import ReviewCreator from "./ReviewCreator";
 import './RatingsReviews.css';
 
-const RatingsReviews = () => { 
+const RatingsReviews = (props) => { 
     //fetch reviews from database
     const {spotId} = useParams();
     const dispatch = useDispatch();
     const reviews = Object.values(useSelector(state => state.reviews.spot));
-
+    
     useEffect(() => {
         dispatch(thunkGetRevsForSpot(spotId))
     }, [dispatch])
@@ -18,6 +18,7 @@ const RatingsReviews = () => {
     if(!reviews.length) return null;
     return (
         <>
+           
             {reviews.map(rev => (
                 <ReviewCreator key={rev.id} review={rev} />
             ))}

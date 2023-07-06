@@ -7,6 +7,7 @@ import LandingPage from "./components/LandingPage";
 import SpotDetails from "./components/SpotDetails";
 import ManageSpots from "./components/ManageSpots";
 import CreateSpot from "./components/CreateSpot";
+import UpdateSpot from "./components/UpdateSpot";
 
 
 function App() {
@@ -29,6 +30,9 @@ function App() {
           </Route>
           <Route path='/spots/new'>
              <CreateSpot />
+          </Route>
+          <Route path='/spots/:spotId/edit'>
+            <UpdateSpot />
           </Route>
           <Route path='/spots/:spotId'>
             <SpotDetails />

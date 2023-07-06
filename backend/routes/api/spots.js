@@ -7,7 +7,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 const { validationResult } = require('express-validator');
 //import customValidations
-const { handleDateValidation, validateSpot, validateReview, validateDateInputs, validateBookingDate, validateSpotById, unauthorizedUser, validateSearchParams} = require('../../utils/customValidations');
+const { handleDateValidation, validateSpot, validateReview, validateDateInputs, validateBookingDate, validateSpotById, unauthorizedUser, validateSearchParams, validateSpotImageById} = require('../../utils/customValidations');
 const paginationFunc = require('../../utils/pagination')
 
 const router = express.Router();
@@ -182,6 +182,22 @@ router.post('/:spotId/bookings', requireAuth, validateSpotById,validateDateInput
 
 })
 
+
+//add multiple images to a spot based on the Spot's id
+router.post('/:spotId/images', requireAuth, validateSpotById, async(req, res) => {
+    const spotId = req.params.spotId;
+    const {images} = req.body;
+    images.forEach(image => image.spotId = spotId);
+    const spot = await Spot.findByPk(spotId);
+    const { user } = req;
+    if(spot.ownerId !== user.id) {
+        unauthorizedUser();
+    }
+    
+    let spotImages = await SpotImage.bulkCreate(images);
+    spotImages = spotImages.map(img => img.toJSON())
+    res.json(spotImages)
+})
 //add an image to a Spot based on the Spot's id
 router.post('/:spotId/images', requireAuth, validateSpotById, async(req, res) => {
     const spotId = req.params.spotId;
@@ -199,6 +215,7 @@ router.post('/:spotId/images', requireAuth, validateSpotById, async(req, res) =>
         preview: spotImg.preview
     })
 })
+
 
 //Create a Review for a Spot based on the Spot's id
 router.post('/:spotId/reviews', requireAuth, validateSpotById, validateReview, async(req, res) => {
@@ -268,6 +285,32 @@ router.post('/', requireAuth, validateSpot, async(req, res) => {
     
     res.statusCode = 201;
     res.json(newSpot);
+})
+
+//update all images for a spot
+router.patch('/:spotId/images/edit', requireAuth, validateSpotById, validateSpotImageById, async(req, res) => {
+    const spotId = req.params.spotId;
+    //get all images for spot;
+    const oldImages = SpotImage.findAll({
+        where: {
+            spotId,
+        }
+    });
+    for(let image of oldImages) { //destroy images
+        await image.destroy();
+    } 
+
+    const images = req.body;
+    images.forEach(image => image.spotId = spotId);
+    const spot = await Spot.findByPk(spotId);
+    const { user } = req;
+    if(spot.ownerId !== user.id) {
+        unauthorizedUser();
+    }
+    let spotImages = await SpotImage.bulkCreate(images);
+    spotImages = spotImages.map(img => img.toJSON())
+    res.json(spotImages)
+    
 })
 
 

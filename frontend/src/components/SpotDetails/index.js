@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./SpotDetails.css";
 import { useSelector, useDispatch } from "react-redux";
 import { thunkGetSpotDetails } from "../../store/spots";
@@ -8,12 +8,25 @@ import SpotInfo from "./SpotInfo";
 import SpotImages from "./SpotImages";
 import './Images.css';
 import RatingsReviews from "./RatingsReviews";
+import OpenModalButton from "../OpenModalButton";
+import PostReview from "./RatingsReviews/PostReview";
+import { thunkGetRevsForUser } from "../../store/reviews";
 
 const SpotDetails = () => {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const spotDetails = useSelector((state) => state.spots.singleSpot);
+  const user = useSelector(state => state.session.user)
+  const userReviews = useSelector(state => state.reviews.user);
 
+  const [alreadyReviewed, setAlreadyReviewed] = useState(false);
+
+// //   const
+//   useEffect(() => {
+//       dispatch(thunkGetRevsForUser(user.id))
+//       console.log(userReviews)
+//     }, [dispatch])
+    
   useEffect(() => {
     dispatch(thunkGetSpotDetails(spotId));
   }, [dispatch]);
@@ -47,6 +60,11 @@ const SpotDetails = () => {
     <div className="reviews-container">
         <h2><i className="fa-solid fa-star"></i>{avgStars} {revCount} reviews</h2>
         {revCount === 0 && <p>No reviews yet</p>}
+    {/* if user has already posted a review for spot, button shouldn't show up */}
+       {user && <OpenModalButton
+                buttonText="Post Your Review"
+                modalComponent={<PostReview spotId={spotId}/>}
+            />}
         <RatingsReviews />
     </div>
     </>

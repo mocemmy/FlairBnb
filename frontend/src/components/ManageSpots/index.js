@@ -21,6 +21,11 @@ const ManageSpots = () => {
         dispatch(thunkGetSpotsCurrUser());
     }, [dispatch])
 
+    const handleUpdate = (e, spot) => {
+        console.log(spot);
+        history.push(`/spots/${spot.id}/edit`)
+    }
+
     if(!spots.length) return null;
 
     return (
@@ -36,9 +41,12 @@ const ManageSpots = () => {
                     <div className='button-container'>
                        <li>
                         <OpenModalButton
-                            buttonText="delete"
+                            buttonText="Delete"
                             modalComponent={<DeleteSpot spotId={spot.id}/>}
                         />
+                       </li>
+                       <li>
+                            <button onClick={(e) => handleUpdate(e, spot)}>Update</button>
                        </li>
                     </div>
                     </div>

@@ -4,6 +4,7 @@ const GET_ALL_SPOTS = 'spots/get_spots';
 const SPOT_DETAILS = 'spots/get_spot_details';
 const DELETE_SPOT = 'spots/delete_spot';
 const CREATE_SPOT = 'spots/create_spot';
+const UPDATE_SPOT = 'spots/update_spot';
 
 const actionGetSpots = (spots) => ({
     type: GET_ALL_SPOTS,
@@ -22,6 +23,11 @@ const actionDeleteSpot = (spotId) => ({
 
 const actionCreateSpot = (spot) => ({
     type: CREATE_SPOT,
+    spot
+})
+
+const actionUpdateSpot = (spot) =>({
+    type: UPDATE_SPOT,
     spot
 })
 
@@ -65,7 +71,8 @@ export const thunkDeleteSpot = (spotId) => async dispatch => {
     }
 }
 
-export const thunkCreateSpot = (spot) => async dispatch => {
+export const thunkCreateSpot = (spot, imgBody) => async dispatch => {
+    const errors = {};
     const res = await csrfFetch('/api/spots', {
         method: "POST",
         body: JSON.stringify(spot)
@@ -73,7 +80,54 @@ export const thunkCreateSpot = (spot) => async dispatch => {
 
     if(res.ok){
         const spot = await res.json();
-        dispatch(actionCreateSpot(spot))
+        const imgRes = await csrfFetch(`/api/spots/${spot.id}/images`, {
+            method: "POST",
+            body: JSON.stringify(imgBody)
+        })
+        if(imgRes.ok) {
+            const spotRes = await csrfFetch(`/api/spots/${spot.id}`);
+            if(spotRes.ok){
+                const newSpot = await spotRes.json()
+                dispatch(actionCreateSpot(newSpot))
+            }
+        } else {
+            errors.createImages = await imgRes.json();
+
+        }
+    } else {
+        errors.createSpot = await res.json()
+    }
+    console.log(errors)
+}
+
+export const thunkUpdateSpot = (spotId, spotBody, imgBody) => async dispatch => {
+    const errors = {};
+    const res = await csrfFetch(`/api/spots/${spotId}`, {
+        method: "PUT",
+        body: JSON.stringify(spotBody)
+    })
+    console.log("here")
+    if(res.ok) {
+        const imgRes = await csrfFetch(`/api/spots/${spotId}/images/edit`, {
+            method: "PATCH",
+            body: JSON.stringify(imgBody)
+        })
+        if(imgRes.ok) {
+            const spotRes = await csrfFetch(`/api/spots/${spotId}`);
+            if(spotRes.ok){
+                const spot = await spotRes.json();
+                dispatch(actionUpdateSpot(spot))
+            } else {
+                errors.getSpot = await spotRes.json()
+                console.log(errors)
+            }
+        } else {
+            errors.editImages = await imgRes.json();
+            console.log(errors)
+        }
+    } else {
+        errors.editSpot = await res.json();
+        console.log(errors)
     }
 }
 
@@ -101,9 +155,12 @@ const spotsReducer = (state = initialState, action ) => {
         
         case CREATE_SPOT: 
             newState = { ...state };
-            newState.allSpots[action.spot.id] = action.spot;
-            newState.singleSpot = action.spot
+            newState.singleSpot = action.spot;
             return newState;
+        case UPDATE_SPOT:
+            newState = { ...state };
+            newState.singleSpot = action.spot;
+            return newState
         default:
             return state;
     }

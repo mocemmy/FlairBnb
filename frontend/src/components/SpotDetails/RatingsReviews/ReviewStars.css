@@ -1,0 +1,23 @@
+.filled {
+    color: #ff5a5f;
+}
+
+.empty {
+    color: gray;
+}
+
+.stars-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+}
+
+.review-form {
+    box-sizing: border-box;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+}
