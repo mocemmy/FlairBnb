@@ -160,7 +160,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
     <div className="form-container">
       <form className="create-new-spot" onSubmit={(e) => onSubmit(e)}>
         <h1 className="form-title">{header}</h1>
-        <label htmlFor="country">
+        <label htmlFor="country" id="country-label">
           Country
           {validationErrors.country && (
             <p className="errors">&nbsp;{validationErrors.country}</p>
@@ -173,7 +173,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
           value={country}
           onChange={(e) => setCountry(e.target.value)}
         />
-        <label htmlFor="street-address">
+        <label htmlFor="street-address" id="address-label">
           Street Address
           {validationErrors.address && (
             <p className="errors">&nbsp;{validationErrors.address}</p>

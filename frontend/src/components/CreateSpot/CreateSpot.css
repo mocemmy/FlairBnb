@@ -17,6 +17,11 @@ input {
 
 label {
     text-align: left;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.5rem;
 }
 .errors {
     color: red;
@@ -41,7 +46,9 @@ label {
 }
 
 .description-section {
-    margin: 2rem;
+    padding: 2rem;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgb(211, 211, 211);
 }
 
 .form-subtitle {
@@ -60,6 +67,8 @@ textarea {
     padding: 2rem;
     align-items: center;
     box-sizing: border-box;
+    border-top: 1px solid rgb(211, 211, 211);
+    border-bottom: 1px solid rgb(211, 211, 211);
 }
 
 #title-input {
@@ -72,6 +81,8 @@ textarea {
     width: 100%;
     box-sizing: border-box;
     padding: 2rem;
+    border-top: 1px solid rgb(211, 211, 211);
+    border-bottom: 1px solid rgb(211, 211, 211);
 }
 
 #price-input {
@@ -83,7 +94,16 @@ textarea {
     width: 100%;
     box-sizing: border-box;
     padding: 2rem;
+    border-top: 1px solid rgb(211, 211, 211);
+    border-bottom: 1px solid rgb(211, 211, 211);
 } 
 .photos-section input {
     margin: 1rem;
+}
+
+#address-label,
+#country-label {
+    display: flex;
+    justify-content: flex-start;
+    width: 90%;
 }
