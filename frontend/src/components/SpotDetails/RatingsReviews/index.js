@@ -16,7 +16,7 @@ const RatingsReviews = ({user, spotId}) => {
         dispatch(thunkGetRevsForSpot(spotId));
     }, [dispatch])
     
-    if(!Object.keys(reviewsObj).length) return <Loading />
+    if(!reviewsObj[spotId]) return <Loading />
     const reviews = Object.values(reviewsObj[spotId]);
     if(reviews) reviews.forEach(rev => {
         if(rev.User.id === user.id) alreadyReviewed = true;
@@ -25,11 +25,9 @@ const RatingsReviews = ({user, spotId}) => {
     const numStars = reviews.reduce((acc, curr) => curr.stars + acc, 0);
     let avgStars = "new";
     if(revCount > 0) {
-        console.log(numStars, revCount);
         avgStars = numStars/revCount;
     }
     let reviewLabel= "reviews";
-    console.log(avgStars);
     // if(revCount = 1) reviewLabel = "review";
     return (
         <>

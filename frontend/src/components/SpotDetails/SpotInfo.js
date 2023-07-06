@@ -7,6 +7,7 @@ const SpotInfo = ({ spot }) => {
       let avgRating = parseInt(spot.avgStarRating).toFixed(2);
 
       if(!spot.avgStarRating) avgRating = "new";
+      if(!spot) return <h1>Spot Info did not load</h1>
   return (
     <>
       <div className="spot-info">

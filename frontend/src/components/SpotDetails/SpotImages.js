@@ -1,6 +1,6 @@
 import ImageCreator from "./ImageCreator";
 const SpotImages = ({imageArr}) => {
-  
+  if(!imageArr) return <h1>image creator did not load</h1>;
     return (
         <>
         <div className="main-image"

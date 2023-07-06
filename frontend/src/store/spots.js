@@ -16,12 +16,12 @@ const actionGetSpotDetails = (spot) => ({
     spot
 })
 
-const actionDeleteSpot = (spotId) => ({
+export const actionDeleteSpot = (spotId) => ({
     type: DELETE_SPOT,
     spotId
 })
 
-const actionCreateSpot = (spot) => ({
+export const actionCreateSpot = (spot) => ({
     type: CREATE_SPOT,
     spot
 })
@@ -71,7 +71,7 @@ export const thunkDeleteSpot = (spotId) => async dispatch => {
     }
 }
 
-export const thunkCreateSpot = (spot, imgBody) => async dispatch => {
+export const thunkCreateSpot = (spot, imgBody) => async (dispatch, getState) => {
     const errors = {};
     const res = await csrfFetch('/api/spots', {
         method: "POST",
@@ -84,12 +84,15 @@ export const thunkCreateSpot = (spot, imgBody) => async dispatch => {
             method: "POST",
             body: JSON.stringify(imgBody)
         })
+        // console.log("SPOT DETAILS", spot);
         if(imgRes.ok) {
-            const spotRes = await csrfFetch(`/api/spots/${spot.id}`);
-            if(spotRes.ok){
-                const newSpot = await spotRes.json()
-                dispatch(actionCreateSpot(newSpot))
+            const spotDetailsRes = await csrfFetch(`/api/spots/${spot.id}`);
+            if(res.ok){
+                const spotDetails = await spotDetailsRes.json();
+                dispatch(actionCreateSpot(spotDetails))
+                return spotDetails;
             }
+            dispatch(thunkGetSpotDetails(spot.id));
         } else {
             errors.createImages = await imgRes.json();
 
@@ -97,7 +100,6 @@ export const thunkCreateSpot = (spot, imgBody) => async dispatch => {
     } else {
         errors.createSpot = await res.json()
     }
-    console.log(errors)
 }
 
 export const thunkUpdateSpot = (spotId, spotBody, imgBody) => async dispatch => {
@@ -141,21 +143,19 @@ const spotsReducer = (state = initialState, action ) => {
             newState.allSpots = {};
             action.spots.forEach(spot => {newState.allSpots[spot.id] = spot});
             return newState;
-        
         case SPOT_DETAILS: 
             newState = { ...state };
             newState.singleSpot = {};
             newState.singleSpot = action.spot;
             return newState;
-        
         case DELETE_SPOT: 
             newState = { ...state, allSpots: {...state.allSpots}};
             delete newState.allSpots[action.spotId]
-            return newState;
-        
+            return newState; 
         case CREATE_SPOT: 
-            newState = { ...state };
+            newState = { ...state, singleSpot: { ...state.singleSpot}, allSpots: {...state.allSpots}};
             newState.singleSpot = action.spot;
+            newState.allSpots[action.spot.id] = action.spot;
             return newState;
         case UPDATE_SPOT:
             newState = { ...state };
