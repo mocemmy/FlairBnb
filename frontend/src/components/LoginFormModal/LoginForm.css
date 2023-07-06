@@ -8,11 +8,28 @@
     width: 100%;
     margin-top: 1rem;
 }
+#login-button {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+#demo-user-button {
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
 
 .input {
+    box-sizing: border-box;
     margin-top: 1rem;
     margin-bottom: 1rem;
-   width: 96%;
+    padding: 0.2rem;
+   width: 100%;
+}
+#login-form {
+    box-sizing: border-box;
+    padding: 2rem;
+    width: fit-content;
 }
 
 #modal-content {
@@ -27,4 +44,9 @@
 
  .errors {
     color: red;
+ }
+
+ .login-buttons-container {
+    display: flex;
+    flex-direction: column;
  }
