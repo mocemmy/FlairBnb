@@ -1,9 +1,23 @@
-/* .spots-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-} */
 
 .spot-management-container{
     width: fit-content;
-    border: 1px solid red;
 }
+
+.spots-management-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: 2rem;
+    margin: 5rem;
+}
+
+.manage-spots-header {
+    margin-left: 5rem;
+    margin-top: 6rem;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
