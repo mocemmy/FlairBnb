@@ -64,7 +64,7 @@ export const thunkDeleteSpot = (spotId) => async dispatch => {
         method: "DELETE"
     })
     if(res.ok) {
-        dispatch(actionDeleteSpot(spotId));
+        dispatch(thunkGetSpotsCurrUser());
     } else {
         const error = await res.json()
         console.log(error)
@@ -106,12 +106,12 @@ export const thunkUpdateSpot = (spotId, spotBody, imgBody) => async dispatch => 
         method: "PUT",
         body: JSON.stringify(spotBody)
     })
-    console.log("here")
     if(res.ok) {
         const imgRes = await csrfFetch(`/api/spots/${spotId}/images/edit`, {
             method: "PATCH",
             body: JSON.stringify(imgBody)
         })
+        console.log("here")
         if(imgRes.ok) {
             const spotRes = await csrfFetch(`/api/spots/${spotId}`);
             if(spotRes.ok){

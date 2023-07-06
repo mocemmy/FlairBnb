@@ -1,4 +1,13 @@
 const ImageCreator = ({imageUrl}) => {
+    if(!imageUrl) return (
+        <div className="secondary-image"
+            style={{
+                backgroundColor: "gray",
+                backgroundSize: 'cover'
+            }}
+        >
+        </div>
+    )
     return (
         <div className="secondary-image"
             style={{

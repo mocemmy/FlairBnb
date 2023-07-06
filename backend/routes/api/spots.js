@@ -288,10 +288,10 @@ router.post('/', requireAuth, validateSpot, async(req, res) => {
 })
 
 //update all images for a spot
-router.patch('/:spotId/images/edit', requireAuth, validateSpotById, validateSpotImageById, async(req, res) => {
+router.patch('/:spotId/images/edit', requireAuth, validateSpotById, async(req, res) => {
     const spotId = req.params.spotId;
     //get all images for spot;
-    const oldImages = SpotImage.findAll({
+    const oldImages = await SpotImage.findAll({
         where: {
             spotId,
         }
@@ -301,13 +301,13 @@ router.patch('/:spotId/images/edit', requireAuth, validateSpotById, validateSpot
     } 
 
     const images = req.body;
-    images.forEach(image => image.spotId = spotId);
+    images.images.forEach(image => image.spotId = spotId);
     const spot = await Spot.findByPk(spotId);
     const { user } = req;
     if(spot.ownerId !== user.id) {
         unauthorizedUser();
     }
-    let spotImages = await SpotImage.bulkCreate(images);
+    let spotImages = await SpotImage.bulkCreate(images.images);
     spotImages = spotImages.map(img => img.toJSON())
     res.json(spotImages)
     

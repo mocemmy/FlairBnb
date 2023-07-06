@@ -1,5 +1,6 @@
 import ImageCreator from "./ImageCreator";
 const SpotImages = ({imageArr}) => {
+  
     return (
         <>
         <div className="main-image"
