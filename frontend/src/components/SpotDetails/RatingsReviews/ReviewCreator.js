@@ -1,10 +1,13 @@
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import OpenModalButton from '../../OpenModalButton';
 import ConfirmDeleteReview from './ConfirmDeleteReview';
 
 const ReviewCreator = ({review}) => {
     const user = useSelector(state => state.session.user);
 
+    const {spotId} = useParams();
+    console.log(spotId);
     return (
         <div className="review-content">
             <div className="review-heading">
@@ -14,7 +17,7 @@ const ReviewCreator = ({review}) => {
             </div>{ review.User.id === user.id &&
             <OpenModalButton
             buttonText="delete"
-            modalComponent={<ConfirmDeleteReview reviewId={review.id}/>}
+            modalComponent={<ConfirmDeleteReview reviewId={review.id} spotId={spotId}/>}
             />}
 
         </div>

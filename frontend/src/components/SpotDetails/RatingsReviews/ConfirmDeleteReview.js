@@ -2,13 +2,13 @@ import { useModal } from "../../../context/Modal";
 import { useDispatch } from "react-redux";
 import { thunkDeleteReview } from "../../../store/reviews";
 
-const ConfirmDeleteReview = ({ reviewId }) => {
+const ConfirmDeleteReview = ({ spotId, reviewId }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
   const handleDelete = (e) => {
     e.preventDefault();
-    dispatch(thunkDeleteReview(reviewId));
+    dispatch(thunkDeleteReview(spotId, reviewId));
     closeModal();
   };
 
