@@ -115,7 +115,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
     image4,
   ]);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     const spotBody = {
@@ -145,11 +145,15 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
       images: imageArr,
     };
     if (type === "create") {
-     dispatch(thunkCreateSpot(spotBody, imageBody))
+     const newSpot = await dispatch(thunkCreateSpot(spotBody, imageBody))
+    console.log(newSpot)
+
+     history.push(`/spots/${newSpot.id}`);
     } else if (type === "update") {
       dispatch(thunkUpdateSpot(spotId, spotBody, imageBody));
+      history.push(`/spots/${spot.id}`);
     }
-    history.push(`/spots/${spot.id}`);
+    
   };
 
   return (

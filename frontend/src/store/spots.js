@@ -90,7 +90,7 @@ export const thunkCreateSpot = (spot, imgBody) => async (dispatch, getState) => 
             if(res.ok){
                 const spotDetails = await spotDetailsRes.json();
                 dispatch(actionCreateSpot(spotDetails))
-                return spotDetails;
+                return spot;
             }
             dispatch(thunkGetSpotDetails(spot.id));
         } else {
