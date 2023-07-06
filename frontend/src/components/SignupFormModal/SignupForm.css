@@ -3,9 +3,12 @@
     font-size: medium;
 }
 
-h1{
+#signup-form-label {
     text-align: center;  
-    font-size: large;
+    font-size: 2rem;
+    font-weight: 300;
+    color: black;
+    width: 100%;
 }
 
 button {
@@ -15,7 +18,22 @@ button {
     border: none;
     border-radius: 0.25rem;
  }
- .button-container {
+ #submit-button {
+    margin: 1rem;
+    margin-bottom: 2rem;
+ }
+
+ #signup-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+ }
+
+ #signup-form input {
+    margin: 0.5rem;
+    padding: 0.2rem;
+ }
+ /* .button-container {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -60,4 +78,4 @@ label {
     flex-direction: row;
     align-items: center;
     padding: 0.5rem;
-}
+} */
