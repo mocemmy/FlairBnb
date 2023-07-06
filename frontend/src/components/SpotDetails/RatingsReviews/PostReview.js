@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import "./ReviewStars.css";
 import { thunkCreateReview } from "../../../store/reviews";
 import { useModal } from "../../../context/Modal";
+import { thunkGetSpotDetails } from "../../../store/spots";
 
 const PostReview = ({spotId}) => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const PostReview = ({spotId}) => {
       stars,
     };
     dispatch(thunkCreateReview(reviewBody, spotId));
+    // dispatch(thunkGetSpotDetails(spotId))
     closeModal();
   };
 

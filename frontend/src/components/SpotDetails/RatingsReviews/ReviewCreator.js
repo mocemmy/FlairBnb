@@ -3,11 +3,9 @@ import { useParams } from 'react-router-dom';
 import OpenModalButton from '../../OpenModalButton';
 import ConfirmDeleteReview from './ConfirmDeleteReview';
 
-const ReviewCreator = ({review}) => {
+const ReviewCreator = ({ review }) => {
     const user = useSelector(state => state.session.user);
-
     const {spotId} = useParams();
-    console.log(spotId);
     return (
         <div className="review-content">
             <div className="review-heading">
