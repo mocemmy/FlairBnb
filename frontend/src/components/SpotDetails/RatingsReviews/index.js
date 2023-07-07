@@ -49,7 +49,7 @@ const RatingsReviews = ({ user, owner, spotId, price }) => {
             <i className="fa-solid fa-star"></i>&nbsp;{avgStars}
           </h2>
         )}
-        {revCount === 0 && user && <p>Be the first to post a review!</p>}
+        {revCount === 0 && user && user.id !== owner && <p>Be the first to post a review!</p>}
         {user && 
         !alreadyReviewed && 
         user.id !== owner && (
