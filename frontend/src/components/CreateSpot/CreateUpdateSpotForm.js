@@ -150,6 +150,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
 
       } catch (e) {
         const errors = {server: e}
+        console.log(errors)
         setValidationErrors(errors);
       }
       
