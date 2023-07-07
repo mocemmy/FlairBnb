@@ -10,13 +10,13 @@ const ReserveSpot = ({ spotInfo }) => {
         <p>
           <span id="price">${decPrice}</span> night
         </p>
-        <p id="stars">
+        <div id="stars">
         {revCount > 0 && <h2>
                     <i className="fa-solid fa-star"></i>&nbsp;
                     {avgStars}&nbsp;&#183;&nbsp;{revCount}&nbsp;{reviewLabel}
                 </h2> }
                 {revCount === 0 && <h2><i className="fa-solid fa-star"></i>&nbsp;{avgStars}</h2>}
-        </p>
+        </div>
       </div>
       <button className="reserve-button" onClick={onClick}>
         Reserve

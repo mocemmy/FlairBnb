@@ -4,8 +4,8 @@
 .tool-tip {
     position: absolute;
     border: 1px solid rgba(211, 211, 211, 0.5);
-    padding: 1rem;
-    background-color: white;
+    padding: 0.5rem;
+    background-color: rgba(255, 255, 255,0.85);
     border-radius: 0.5rem;
     left: 2rem;
 

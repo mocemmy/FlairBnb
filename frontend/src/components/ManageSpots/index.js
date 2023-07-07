@@ -36,7 +36,7 @@ const ManageSpots = () => {
         <>
             <div className="manage-spots-header">
             <h1>Manage Spots</h1>
-                <button onClick={(e) => onClick(e)}>Create a New Spot</button>
+                
             </div>
             <div className='spots-management-container'>
                 {spots.map(spot => (
