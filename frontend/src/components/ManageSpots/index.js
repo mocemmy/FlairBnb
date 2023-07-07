@@ -26,8 +26,12 @@ const ManageSpots = () => {
         history.push(`/spots/${spot.id}/edit`)
     }
 
-    if(!spots.length) return null;
-
+    if(!spots.length) return (
+        <div className="manage-spots-header">
+            <h1>Manage Spots</h1>
+                <button onClick={(e) => onClick(e)}>Create a New Spot</button>
+            </div>
+    )
     return (
         <>
             <div className="manage-spots-header">
