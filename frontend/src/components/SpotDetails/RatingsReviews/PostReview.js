@@ -12,16 +12,19 @@ const PostReview = ({spotId}) => {
   const [stars, setStars] = useState(null);
   const [activeRating, setActiveRating] = useState(stars);
   const {closeModal} = useModal();
-
-  const onSubmit = (e) => {
+  const [errors, setErrors] = useState('');
+  const onSubmit = async (e) => {
     e.preventDefault();
     const reviewBody = {
       review,
       stars,
     };
-    dispatch(thunkCreateReview(reviewBody, spotId));
-    // dispatch(thunkGetSpotDetails(spotId))
-    closeModal();
+     try {
+      await dispatch(thunkCreateReview(reviewBody, spotId));
+      closeModal();
+     } catch (e) {
+       setErrors(e);
+     }
   };
 
   const numStars = [1, 2, 3, 4, 5]; //allows 5 stars
@@ -29,6 +32,7 @@ const PostReview = ({spotId}) => {
     <div className="review-modal-container">
       <form className="review-form" onSubmit={(e) => onSubmit(e)}>
         <h1>How was your stay?</h1>
+        {errors && <p className="errors">{errors.statusText}</p>}
         <textarea
           placeholder="Leave your review here..."
           value={review}

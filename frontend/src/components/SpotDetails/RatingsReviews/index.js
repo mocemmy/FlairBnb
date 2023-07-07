@@ -50,7 +50,9 @@ const RatingsReviews = ({ user, owner, spotId, price }) => {
           </h2>
         )}
         {revCount === 0 && <p>Be the first to post a review!</p>}
-        {user && !alreadyReviewed && user.id !== owner && (
+        {user && 
+        !alreadyReviewed && 
+        user.id !== owner && (
           <OpenModalButton
             buttonText="Post Your Review"
             modalComponent={<PostReview spotId={spotId} />}

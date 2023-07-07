@@ -57,11 +57,10 @@ export const thunkCreateReview = (reviewBody, spotId) => async dispatch => {
     });
     if(res.ok){
        const review = await res.json();
-       console.log(review);
        dispatch(thunkGetRevsForSpot(spotId));
     } else {
         const errors = await res.json();
-        console.log(errors);
+        return errors;
     }
 }
 
