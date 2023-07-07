@@ -145,9 +145,12 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
     };
     if (type === "create") {
       const newSpot = await dispatch(thunkCreateSpot(spotBody, imageBody));
-      console.log(newSpot);
-
-      history.push(`/spots/${newSpot.id}`);
+      
+      if(newSpot.id){
+        history.push(`/spots/${newSpot.id}`);
+      } else {
+        setValidationErrors(newSpot);
+      }
     } else if (type === "update") {
       dispatch(thunkUpdateSpot(spotId, spotBody, imageBody));
       history.push(`/spots/${spotId}`);
