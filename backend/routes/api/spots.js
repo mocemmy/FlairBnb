@@ -56,7 +56,10 @@ router.get('/', validateSearchParams, async(req, res) => {
         },
         {
             model: SpotImage,
-            attributes: ['url']
+            attributes: ['url', 'preview'],
+            where: {
+                preview: true
+            }
         }],
         ...pagination,
     });
