@@ -24,9 +24,9 @@ const SpotDetails = () => {
   }, [dispatch]);
 
 
-  const imageArr = spotDetails.SpotImages;
-
+  
   if (!spotDetails.id) return <Loading />;
+  const imageArr = spotDetails.SpotImages;
   return (
     <>
       <div className="spot-details">
