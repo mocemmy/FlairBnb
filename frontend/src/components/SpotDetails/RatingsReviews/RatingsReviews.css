@@ -1,36 +1,22 @@
 .review-content {
     border-bottom: 1px solid rgba(211, 211, 211, 0.5);
 }
-
-/* h5 {
-    font-weight: bold;
-    padding: 0;
-}
-
-h6{
-    padding: 0;
-    font-weight: 300;
-}
-
-.reviews-container {
-    border: 1px solid red;
-} */
-
 .all-spot-info-container {
     width: 100%;
     box-sizing: border-box;
     display: grid;
     grid-template: 
-        "a a b"
-        "c c c"
-        "c c c";
+        "a a b" 1fr 
+        "c c c" 1fr 
+        "c c c" 1fr;
 }
 
-.reserve-card {
+.reserve-container {
     grid-area: b;
     box-sizing: border-box;
     padding: 2rem;
     border-radius: 1rem;
+    width: 100%;
     border:rgba(211, 211, 211, 0.5);
     margin-bottom: 1rem;
     box-shadow: 0.5rem 0.5rem 2rem rgba(211, 211, 211);

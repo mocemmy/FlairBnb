@@ -48,5 +48,13 @@ h1 {
 .price-reviews-container {
     display: flex;
     justify-content: space-between;
+    margin-right: 0;
+    align-items: center;
+    width:100%;
+    box-sizing: border-box;
+}
+.reserve-card {
+    box-sizing: border-box;
+    width: 100%;
 }
 
