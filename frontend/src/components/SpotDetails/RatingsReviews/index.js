@@ -25,16 +25,17 @@ const RatingsReviews = ({user, spotId}) => {
     const numStars = reviews.reduce((acc, curr) => curr.stars + acc, 0);
     let avgStars = "new";
     if(revCount > 0) {
-        avgStars = numStars/revCount;
+        avgStars = (numStars/revCount).toFixed(2);
     }
     let reviewLabel= "reviews";
-    // if(revCount = 1) reviewLabel = "review";
+    if(revCount == 1) reviewLabel = "review";
     return (
         <>
-            <h2>
-                <i className="fa-solid fa-star"></i>
-                {avgStars}&nbsp;{revCount}&nbsp;{reviewLabel}
-            </h2>
+                {revCount > 0 && <h2>
+                    <i className="fa-solid fa-star"></i>&nbsp;
+                    {avgStars}&nbsp;&#183;&nbsp;{revCount}&nbsp;{reviewLabel}
+                </h2> }
+                {revCount === 0 && <h2><i className="fa-solid fa-star"></i>&nbsp;{avgStars}</h2>}
             {revCount === 0 &&<p>No reviews yet</p>}
             {user && !alreadyReviewed && 
             (

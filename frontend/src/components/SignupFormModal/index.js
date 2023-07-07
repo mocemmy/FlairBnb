@@ -53,7 +53,7 @@ function SignupFormModal() {
           onChange={(e) => setFirstName(e.target.value)}
           required
         />
-        {errors.firstName && <p>{errors.firstName}</p>}
+        {errors.firstName && <p className="errors">{errors.firstName}</p>}
         <input
           type="text"
           placeholder="Last Name"
@@ -61,7 +61,7 @@ function SignupFormModal() {
           onChange={(e) => setLastName(e.target.value)}
           required
         />
-        {errors.lastName && <p>{errors.lastName}</p>}
+        {errors.lastName && <p className="errors">{errors.lastName}</p>}
         <input
           type="text"
           value={email}
@@ -70,7 +70,7 @@ function SignupFormModal() {
           required
         />
 
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && <p className="errors">{errors.email}</p>}
 
         <input
           type="text"
@@ -80,7 +80,7 @@ function SignupFormModal() {
           required
         />
 
-        {errors.username && <p>{errors.username}</p>}
+        {errors.username && <p className="errors">{errors.username}</p>}
 
         <input
           placeholder="Password"
@@ -89,7 +89,7 @@ function SignupFormModal() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <p className="errors">{errors.password}</p>}
         <input
           type="password"
           placeholder="Confirm Password"
@@ -97,17 +97,11 @@ function SignupFormModal() {
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        {errors.confirmPassword && <p className="errors">{errors.confirmPassword}</p>}
         <button
         id="submit-button"
           type="submit"
           disabled={
-            email.length === 0 ||
-            username.length === 0 ||
-            firstName.length === 0 ||
-            lastName.length === 0 ||
-            password.length === 0 ||
-            confirmPassword.length === 0 ||
             password.length < 6 ||
             username.length < 4
               ? true
