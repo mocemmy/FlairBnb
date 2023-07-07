@@ -1,23 +1,25 @@
-const SpotInfo = ({ spot }) => {
-    const onClick = () => {
-        window.alert("Feature coming soon");
-      };
-      const price = parseInt(spot.price).toFixed(2);
+import Loading from "../Loading";
+import RatingsReviews from "./RatingsReviews";
 
-      let avgRating = parseInt(spot.avgStarRating).toFixed(2);
+const SpotInfo = ({ spot, user }) => {
+    // const onClick = () => {
+    //     window.alert("Feature coming soon");
+    //   };
+      // const price = parseInt(spot.price).toFixed(2);
 
-      if(!spot.avgStarRating) avgRating = "new";
-      if(!spot) return <h1>Spot Info did not load</h1>
+      // let avgRating = parseInt(spot.avgStarRating).toFixed(2);
+
+      // if(!spot.avgStarRating) avgRating = "new";
+      if(!spot) return <Loading />
   return (
-    <>
+    <div className="all-spot-info-container">
       <div className="spot-info">
         <h2 className="owner-info">
           Hosted by {spot.Owner.firstName} {spot.Owner.lastName}
         </h2>
         <p className="description">{spot.description}</p>
       </div>
-      <div className="reserve">
-        <div className="price-reviews-container">
+        {/* <div className="price-reviews-container">
           <p>
             <span id="price">${price}</span> night
           </p>
@@ -29,9 +31,12 @@ const SpotInfo = ({ spot }) => {
         </div>
         <button className="reserve-button" onClick={onClick}>
           Reserve
-        </button>
-      </div>
-    </>
+        </button> */}
+
+        <RatingsReviews spotId={spot.id} owner={spot.ownerId} user={user} price={spot.price}/>
+     
+
+    </div>
   );
 };
 

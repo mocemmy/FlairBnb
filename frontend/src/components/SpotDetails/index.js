@@ -43,12 +43,10 @@ const SpotDetails = () => {
           <SpotImages imageArr={imageArr} />
         </div>
         <div className="spot-info-container">
-          <SpotInfo spot={spotDetails} />
+          <SpotInfo user={user} spot={spotDetails} />
         </div>
       </div>
-      <div className="reviews-container">
-        <RatingsReviews spotId={spotId} owner={spotDetails.ownerId} user={user}/>
-      </div>
+      
     </>
   );
 };
