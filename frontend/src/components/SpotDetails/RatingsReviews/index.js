@@ -44,7 +44,7 @@ const RatingsReviews = ({user, spotId}) => {
                     modalComponent={<PostReview spotId={spotId} />}
                 />
             )}
-            {reviews.map(rev => (
+            {reviews.reverse().map(rev => (
                 <ReviewCreator key={rev.id} review={rev} />
             ))}
         </>
