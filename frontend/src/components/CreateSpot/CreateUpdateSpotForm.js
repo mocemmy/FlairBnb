@@ -294,6 +294,8 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
           <p>Submit a link with at least one photo to publish your spot</p>
           <input
             placeholder="Preview Image URL"
+            type="url"
+            className="image-inputs"
             value={previewImage}
             onChange={(e) => setPreviewImage(e.target.value)}
           />
@@ -303,6 +305,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
           <input
             placeholder="Image URL"
             type="url"
+            className="image-inputs"
             value={image1}
             onChange={(e) => setImage1(e.target.value)}
           />
@@ -312,6 +315,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
           <input
             placeholder="Image URL"
             type="url"
+            className="image-inputs"
             value={image2}
             onChange={(e) => setImage2(e.target.value)}
           />
@@ -321,6 +325,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
           <input
             placeholder="Image URL"
             type="url"
+            className="image-inputs"
             value={image3}
             onChange={(e) => setImage3(e.target.value)}
           />
@@ -330,6 +335,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
           <input
             placeholder="Image URL"
             type="url"
+            className="image-inputs"
             value={image4}
             onChange={(e) => setImage4(e.target.value)}
           />
