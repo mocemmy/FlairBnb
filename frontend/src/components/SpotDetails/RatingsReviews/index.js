@@ -19,7 +19,7 @@ const RatingsReviews = ({ user, owner, spotId, price }) => {
 
   if (!reviewsObj[spotId]) return <Loading />;
   const reviews = Object.values(reviewsObj[spotId]);
-  if (reviews)
+  if (reviews && user)
     reviews.forEach((rev) => {
       if (rev.User.id === user.id) alreadyReviewed = true;
     });
@@ -49,7 +49,7 @@ const RatingsReviews = ({ user, owner, spotId, price }) => {
             <i className="fa-solid fa-star"></i>&nbsp;{avgStars}
           </h2>
         )}
-        {revCount === 0 && <p>Be the first to post a review!</p>}
+        {revCount === 0 && user && <p>Be the first to post a review!</p>}
         {user && 
         !alreadyReviewed && 
         user.id !== owner && (

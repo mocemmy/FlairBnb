@@ -144,13 +144,18 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
       images: imageArr,
     };
     if (type === "create") {
-      const newSpot = await dispatch(thunkCreateSpot(spotBody, imageBody));
-      
-      if(newSpot.id){
-        history.push(`/spots/${newSpot.id}`);
-      } else {
-        setValidationErrors(newSpot);
+      try{
+        const newSpot = await dispatch(thunkCreateSpot(spotBody, imageBody));
+        if(newSpot.id) history.push(`/spots/${newSpot.id}`);
+
+      } catch (e) {
+        const errors = {server: e}
+        setValidationErrors(errors);
       }
+      
+       
+        
+      
     } else if (type === "update") {
       dispatch(thunkUpdateSpot(spotId, spotBody, imageBody));
       history.push(`/spots/${spotId}`);
@@ -273,6 +278,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
             <input
               id="price-input"
               placeholder="Price per night (USD)"
+              type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
@@ -294,6 +300,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
           )}
           <input
             placeholder="Image URL"
+            type="url"
             value={image1}
             onChange={(e) => setImage1(e.target.value)}
           />
@@ -302,6 +309,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
           )}
           <input
             placeholder="Image URL"
+            type="url"
             value={image2}
             onChange={(e) => setImage2(e.target.value)}
           />
@@ -310,6 +318,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
           )}
           <input
             placeholder="Image URL"
+            type="url"
             value={image3}
             onChange={(e) => setImage3(e.target.value)}
           />
@@ -318,6 +327,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
           )}
           <input
             placeholder="Image URL"
+            type="url"
             value={image4}
             onChange={(e) => setImage4(e.target.value)}
           />
@@ -325,6 +335,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
             <p className="errors">{validationErrors.image4}</p>
           )}
         </div>
+        {validationErrors.server && <p className="errors">{validationErrors.server}</p>}
         <button
           type="submit"
           disabled={Object.keys(validationErrors).length ? true : false}

@@ -14,13 +14,15 @@ const ReviewCreator = ({ review }) => {
     const {spotId} = useParams();
     let [year, month] = review.createdAt.split('-');
     month = getMonthName(month);
+    if(!review) return null;
     return (
         <div className="review-content">
             <div className="review-heading">
                 <h5>{review.User.firstName}</h5>
                 <h6>{month}&nbsp;{year}</h6>
                 <p>{review.review}</p>
-            </div>{ review.User.id === user.id &&
+            </div>
+            {user && review.User.id === user.id &&
             <OpenModalButton
             buttonText="delete"
             modalComponent={<ConfirmDeleteReview reviewId={review.id} spotId={spotId}/>}
