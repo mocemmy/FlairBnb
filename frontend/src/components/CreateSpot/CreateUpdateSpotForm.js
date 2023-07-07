@@ -73,7 +73,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
   const [image4, setImage4] = useState(image4Val || "");
   const [validationErrors, setValidationErrors] = useState({});
   const [serverErrors, setServerErrors] = useState(null);
-
+  const [clickedSubmit, setClickedSubmit] = useState(false);
 
   //check validation errors:
   useEffect(() => {
@@ -115,55 +115,59 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
     image4,
   ]);
 
+  const onClick = (e) => {
+    setClickedSubmit(true);
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (!Object.keys(validationErrors).length) {
+      const spotBody = {
+        address,
+        city,
+        state: addState,
+        country,
+        lat: 0,
+        lng: 0,
+        name: title,
+        description,
+        price: parseInt(price),
+      };
 
-    const spotBody = {
-      address,
-      city,
-      state: addState,
-      country,
-      lat: 0,
-      lng: 0,
-      name: title,
-      description,
-      price: parseInt(price),
-    };
+      const imageArr = [
+        {
+          preview: true,
+          url: previewImage,
+        },
+      ];
+      if (image1) imageArr.push({ preview: false, url: image1 });
+      if (image2) imageArr.push({ preview: false, url: image2 });
+      if (image3) imageArr.push({ preview: false, url: image3 });
+      if (image4) imageArr.push({ preview: false, url: image4 });
 
-    const imageArr = [
-      {
-        preview: true,
-        url: previewImage,
-      },
-    ];
-    if (image1) imageArr.push({ preview: false, url: image1 });
-    if (image2) imageArr.push({ preview: false, url: image2 });
-    if (image3) imageArr.push({ preview: false, url: image3 });
-    if (image4) imageArr.push({ preview: false, url: image4 });
-
-    const imageBody = {
-      images: imageArr,
-    };
-    if (type === "create") {
-      try{
-        const newSpot = await dispatch(thunkCreateSpot(spotBody, imageBody));
-        if(newSpot.id) history.push(`/spots/${newSpot.id}`);
-      } catch (e) {
-        const errors = JSON.stringify(e.statusText);
-        setServerErrors(errors);
-        console.log("errors returned: ", errors, serverErrors)
+      const imageBody = {
+        images: imageArr,
+      };
+      if (type === "create") {
+        try {
+          const newSpot = await dispatch(thunkCreateSpot(spotBody, imageBody));
+          if (newSpot.id) history.push(`/spots/${newSpot.id}`);
+        } catch (e) {
+          const errors = JSON.stringify(e.statusText);
+          setServerErrors(errors);
+          console.log("errors returned: ", errors, serverErrors);
+        }
+      } else if (type === "update") {
+        dispatch(thunkUpdateSpot(spotId, spotBody, imageBody));
+        history.push(`/spots/${spotId}`);
       }
-      
-    } else if (type === "update") {
-      dispatch(thunkUpdateSpot(spotId, spotBody, imageBody));
-      history.push(`/spots/${spotId}`);
     }
   };
 
   return (
     <div className="form-container">
       <form className="create-new-spot" onSubmit={(e) => onSubmit(e)}>
-          <h1 className="form-title">{header}</h1>
+        <h1 className="form-title">{header}</h1>
         <div className="location-section">
           <h2 className="form-subtitle" id="location-header">
             Where's your place located?
@@ -174,7 +178,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
           </p>
           <label htmlFor="country" id="country-label">
             Country
-            {validationErrors.country && (
+            {clickedSubmit && validationErrors.country && (
               <p className="errors">&nbsp;{validationErrors.country}</p>
             )}
           </label>
@@ -188,7 +192,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
           />
           <label htmlFor="street-address" id="address-label">
             Street Address
-            {validationErrors.address && (
+            {clickedSubmit && validationErrors.address && (
               <p className="errors">&nbsp;{validationErrors.address}</p>
             )}
           </label>
@@ -204,7 +208,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
             <div className="city">
               <label htmlFor="city">
                 City
-                {validationErrors.city && (
+                {clickedSubmit && validationErrors.city && (
                   <p className="errors">&nbsp;{validationErrors.city}</p>
                 )}
               </label>
@@ -219,7 +223,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
             <div className="state">
               <label htmlFor="state">
                 State
-                {validationErrors.state && (
+                {clickedSubmit && validationErrors.state && (
                   <p className="errors">&nbsp;{validationErrors.state}</p>
                 )}
               </label>
@@ -245,7 +249,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          {validationErrors.description && (
+          {clickedSubmit && validationErrors.description && (
             <p className="errors">{validationErrors.description}</p>
           )}
         </div>
@@ -261,7 +265,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-          {validationErrors.title && (
+          {clickedSubmit && validationErrors.title && (
             <p className="errors">{validationErrors.title}</p>
           )}
         </div>
@@ -281,7 +285,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
               onChange={(e) => setPrice(e.target.value)}
             />
           </label>
-          {validationErrors.price && (
+          {clickedSubmit && validationErrors.price && (
             <p className="errors">{validationErrors.price}</p>
           )}
         </div>
@@ -293,7 +297,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
             value={previewImage}
             onChange={(e) => setPreviewImage(e.target.value)}
           />
-          {validationErrors.previewImage && (
+          {clickedSubmit && validationErrors.previewImage && (
             <p className="errors">{validationErrors.previewImage}</p>
           )}
           <input
@@ -302,7 +306,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
             value={image1}
             onChange={(e) => setImage1(e.target.value)}
           />
-          {validationErrors.image1 && (
+          {clickedSubmit && validationErrors.image1 && (
             <p className="errors">{validationErrors.image1}</p>
           )}
           <input
@@ -311,7 +315,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
             value={image2}
             onChange={(e) => setImage2(e.target.value)}
           />
-          {validationErrors.image2 && (
+          {clickedSubmit && validationErrors.image2 && (
             <p className="errors">{validationErrors.image2}</p>
           )}
           <input
@@ -320,7 +324,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
             value={image3}
             onChange={(e) => setImage3(e.target.value)}
           />
-          {validationErrors.image3 && (
+          {clickedSubmit && validationErrors.image3 && (
             <p className="errors">{validationErrors.image3}</p>
           )}
           <input
@@ -329,14 +333,17 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
             value={image4}
             onChange={(e) => setImage4(e.target.value)}
           />
-          {validationErrors.image4 && (
+          {clickedSubmit && validationErrors.image4 && (
             <p className="errors">{validationErrors.image4}</p>
           )}
         </div>
-        {serverErrors && <p className="errors">{serverErrors}</p>}
+        {clickedSubmit && serverErrors && (
+          <p className="errors">{serverErrors}</p>
+        )}
         <button
           type="submit"
-          disabled={Object.keys(validationErrors).length ? true : false}
+          onClick={(e) => onClick(e)}
+          // disabled={Object.keys(validationErrors).length ? true : false}
         >
           {buttonText}
         </button>
