@@ -102,6 +102,10 @@ function SignupFormModal() {
         id="submit-button"
           type="submit"
           disabled={
+            firstName.length === 0 ||
+            lastName.length === 0 ||
+            email.length === 0 ||
+            confirmPassword.length === 0 ||
             password.length < 6 ||
             username.length < 4
               ? true
