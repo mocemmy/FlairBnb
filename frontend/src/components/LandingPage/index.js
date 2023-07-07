@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { thunkGetAllSpots } from '../../store/spots';
 import SpotsCreator from './SpotsCreator';
 import './LandingPage.css';
+import Loading from '../Loading';
 
 function LandingPage() {
     const dispatch = useDispatch();
@@ -13,7 +14,7 @@ function LandingPage() {
         dispatch(thunkGetAllSpots());
     }, [dispatch])
     
-    if(!spots.length) return null
+    if(!spots.length) return <Loading />
     return (
         <div className='spots-container'>
             <div className='spots-list'>

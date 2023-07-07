@@ -26,6 +26,7 @@ const SpotDetails = () => {
 
   
   if (!spotDetails.id) return <Loading />;
+
   const imageArr = spotDetails.SpotImages;
   return (
     <>
