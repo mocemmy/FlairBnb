@@ -72,6 +72,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
   const [image3, setImage3] = useState(image3Val || "");
   const [image4, setImage4] = useState(image4Val || "");
   const [validationErrors, setValidationErrors] = useState({});
+  const [serverErrors, setServerErrors] = useState(null);
 
 
   //check validation errors:
@@ -147,15 +148,11 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
       try{
         const newSpot = await dispatch(thunkCreateSpot(spotBody, imageBody));
         if(newSpot.id) history.push(`/spots/${newSpot.id}`);
-
       } catch (e) {
-        const errors = {server: e}
-        console.log(errors)
-        setValidationErrors(errors);
+        const errors = JSON.stringify(e.statusText);
+        setServerErrors(errors);
+        console.log("errors returned: ", errors, serverErrors)
       }
-      
-       
-        
       
     } else if (type === "update") {
       dispatch(thunkUpdateSpot(spotId, spotBody, imageBody));
@@ -336,7 +333,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
             <p className="errors">{validationErrors.image4}</p>
           )}
         </div>
-        {validationErrors.server && <p className="errors">{validationErrors.server}</p>}
+        {serverErrors && <p className="errors">{serverErrors}</p>}
         <button
           type="submit"
           disabled={Object.keys(validationErrors).length ? true : false}
