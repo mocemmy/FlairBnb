@@ -46,7 +46,7 @@ const SpotDetails = () => {
         </div>
       </div>
       <div className="reviews-container">
-        <RatingsReviews spotId={spotId} user={user}/>
+        <RatingsReviews spotId={spotId} owner={spotDetails.ownerId} user={user}/>
       </div>
     </>
   );

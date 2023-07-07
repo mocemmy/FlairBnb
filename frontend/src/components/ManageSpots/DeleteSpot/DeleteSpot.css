@@ -14,3 +14,7 @@
 .delete-button {
     width: 100%;
 }
+ #dont-delete {
+    background-color: gray !important;
+    width: 100%;
+ }

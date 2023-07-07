@@ -84,7 +84,6 @@ export const thunkCreateSpot = (spot, imgBody) => async (dispatch, getState) => 
             method: "POST",
             body: JSON.stringify(imgBody)
         })
-        // console.log("SPOT DETAILS", spot);
         if(imgRes.ok) {
             const spotDetailsRes = await csrfFetch(`/api/spots/${spot.id}`);
             if(res.ok){
@@ -113,7 +112,6 @@ export const thunkUpdateSpot = (spotId, spotBody, imgBody) => async dispatch => 
             method: "PATCH",
             body: JSON.stringify(imgBody)
         })
-        console.log("here")
         if(imgRes.ok) {
             const spotRes = await csrfFetch(`/api/spots/${spotId}`);
             if(spotRes.ok){
@@ -155,10 +153,9 @@ const spotsReducer = (state = initialState, action ) => {
         case CREATE_SPOT: 
             newState = { ...state, singleSpot: { ...state.singleSpot}, allSpots: {...state.allSpots}};
             newState.singleSpot = action.spot;
-            newState.allSpots[action.spot.id] = action.spot;
             return newState;
         case UPDATE_SPOT:
-            newState = { ...state };
+            newState = { ...state, singleSpot: { ...state.singleSpot }};
             newState.singleSpot = action.spot;
             return newState
         default:

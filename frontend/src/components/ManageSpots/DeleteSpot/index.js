@@ -21,7 +21,7 @@ const DeleteSpot = ({spotId}) => {
       </p>
       <div className="buttons-container">
         <button className="delete-button" onClick={handleDelete}>Yes (Delete Spot)</button>
-        <button className="delete-button" onClick={closeModal}>No (Keep Spot)</button>
+        <button id="dont-delete" onClick={closeModal}>No (Keep Spot)</button>
       </div>
     </div>
   );

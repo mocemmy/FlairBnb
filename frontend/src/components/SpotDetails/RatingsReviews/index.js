@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { thunkGetRevsForSpot } from "../../../store/reviews";
 import Loading from "../../Loading";
 
-const RatingsReviews = ({user, spotId}) => { 
+const RatingsReviews = ({user, owner,spotId}) => { 
     const dispatch = useDispatch();
     const reviewsObj = useSelector((state) => state.reviews.spot);
     let alreadyReviewed = false;
@@ -36,8 +36,8 @@ const RatingsReviews = ({user, spotId}) => {
                     {avgStars}&nbsp;&#183;&nbsp;{revCount}&nbsp;{reviewLabel}
                 </h2> }
                 {revCount === 0 && <h2><i className="fa-solid fa-star"></i>&nbsp;{avgStars}</h2>}
-            {revCount === 0 &&<p>No reviews yet</p>}
-            {user && !alreadyReviewed && 
+            {revCount === 0 &&<p>Be the first to post a review!</p>}
+            {user && !alreadyReviewed && user.id !== owner && 
             (
                 <OpenModalButton
                     buttonText="Post Your Review"

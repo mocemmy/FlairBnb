@@ -65,7 +65,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
   const [addState, setAddState] = useState(stateVal || "");
   const [description, setDescription] = useState(descriptionVal || "");
   const [title, setTitle] = useState(nameVal || "");
-  const [price, setPrice] = useState(priceVal || 0);
+  const [price, setPrice] = useState(priceVal || "");
   const [previewImage, setPreviewImage] = useState(previewImageVal || "");
   const [image1, setImage1] = useState(image1Val || "");
   const [image2, setImage2] = useState(image2Val || "");
@@ -73,7 +73,6 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
   const [image4, setImage4] = useState(image4Val || "");
   const [validationErrors, setValidationErrors] = useState({});
 
-  const spot = useSelector((state) => state.spots.singleSpot);
 
   //check validation errors:
   useEffect(() => {
@@ -84,7 +83,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
     if (!(city.length > 0)) errors.city = "City is required";
     if (!(addState.length > 0)) errors.state = "State is required";
     if (!(description.length > 30))
-      errors.description = "Description needs a minimum of 30 characters";
+      errors.description = "Description needs 30 or more characters";
     if (!(title.length > 0)) errors.title = "Name is required";
     if (!price) errors.price = "Price is required";
     if (!(previewImage.length > 0))
@@ -145,77 +144,87 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
       images: imageArr,
     };
     if (type === "create") {
-     const newSpot = await dispatch(thunkCreateSpot(spotBody, imageBody))
-    console.log(newSpot)
+      const newSpot = await dispatch(thunkCreateSpot(spotBody, imageBody));
+      console.log(newSpot);
 
-     history.push(`/spots/${newSpot.id}`);
+      history.push(`/spots/${newSpot.id}`);
     } else if (type === "update") {
       dispatch(thunkUpdateSpot(spotId, spotBody, imageBody));
-      history.push(`/spots/${spot.id}`);
+      history.push(`/spots/${spotId}`);
     }
-    
   };
 
   return (
     <div className="form-container">
       <form className="create-new-spot" onSubmit={(e) => onSubmit(e)}>
-        <h1 className="form-title">{header}</h1>
-        <label htmlFor="country" id="country-label">
-          Country
-          {validationErrors.country && (
-            <p className="errors">&nbsp;{validationErrors.country}</p>
-          )}
-        </label>
+          <h1 className="form-title">{header}</h1>
+        <div className="location-section">
+          <h2 className="form-subtitle" id="location-header">
+            Where's your place located?
+          </h2>
+          <p id="location-subheader">
+            Guests will only get your exact address once they booked a
+            reservation.
+          </p>
+          <label htmlFor="country" id="country-label">
+            Country
+            {validationErrors.country && (
+              <p className="errors">&nbsp;{validationErrors.country}</p>
+            )}
+          </label>
 
-        <input
-          name="country"
-          placeholder="Country"
-          value={country}
-          onChange={(e) => setCountry(e.target.value)}
-        />
-        <label htmlFor="street-address" id="address-label">
-          Street Address
-          {validationErrors.address && (
-            <p className="errors">&nbsp;{validationErrors.address}</p>
-          )}
-        </label>
+          <input
+            name="country"
+            className="location-input"
+            placeholder="Country"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+          />
+          <label htmlFor="street-address" id="address-label">
+            Street Address
+            {validationErrors.address && (
+              <p className="errors">&nbsp;{validationErrors.address}</p>
+            )}
+          </label>
 
-        <input
-          name="street-address"
-          placeholder="Address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <div className="city-state">
-          <div className="city">
-            <label htmlFor="city">
-              City
-              {validationErrors.city && (
-                <p className="errors">&nbsp;{validationErrors.city}</p>
-              )}
-            </label>
-            <input
-              className="location-input"
-              name="city"
-              placeholder="City"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-            />
-          </div>
-          <div className="state">
-            <label htmlFor="state">
-              State
-              {validationErrors.state && (
-                <p className="errors">&nbsp;{validationErrors.state}</p>
-              )}
-            </label>
-            <input
-              className="location-input"
-              name="state"
-              placeholder="State"
-              value={addState}
-              onChange={(e) => setAddState(e.target.value)}
-            />
+          <input
+            className="location-input"
+            name="street-address"
+            placeholder="Address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+          <div className="city-state">
+            <div className="city">
+              <label htmlFor="city">
+                City
+                {validationErrors.city && (
+                  <p className="errors">&nbsp;{validationErrors.city}</p>
+                )}
+              </label>
+              <input
+                className="location-input"
+                name="city"
+                placeholder="City"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+              />
+            </div>
+            <div className="state">
+              <label htmlFor="state">
+                State
+                {validationErrors.state && (
+                  <p className="errors">&nbsp;{validationErrors.state}</p>
+                )}
+              </label>
+              <input
+                className="location-input"
+                name="state"
+                placeholder="State"
+                value={addState}
+                onChange={(e) => setAddState(e.target.value)}
+              />
+            </div>
           </div>
         </div>
         <div className="description-section">
@@ -226,7 +235,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
           </p>
           <textarea
             style={{ resize: "none" }}
-            placeholder="Description"
+            placeholder="Please write at least 30 characters"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />

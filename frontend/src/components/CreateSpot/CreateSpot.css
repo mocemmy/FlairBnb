@@ -10,6 +10,11 @@
     align-items: center;
 }
 
+#location-header,
+#location-subheader {
+    width: 90%;
+    box-sizing: border-box;
+}
 
 input {
     width: 90%;
@@ -32,7 +37,8 @@ label {
 .city-state {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    width: 92%;
+    width: 100%;
+    box-sizing: border-box;
     margin: auto;
 }
 
@@ -41,7 +47,8 @@ label {
     width: 100%;
 }
 .location-input {
-    width: 95%;
+    width: 100%;
+    box-sizing: border-box;
     margin: 0;
 }
 
@@ -77,7 +84,8 @@ textarea {
     margin: 0;
 }
 
-.price-section {
+.price-section,
+.location-section {
     width: 100%;
     box-sizing: border-box;
     padding: 2rem;
