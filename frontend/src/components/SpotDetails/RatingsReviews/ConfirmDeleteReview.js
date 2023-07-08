@@ -19,7 +19,7 @@ const ConfirmDeleteReview = ({reviewId, spotId }) => {
       </p>
       <div className="buttons-container">
         <button className="delete-button" onClick={handleDelete}>Yes (Delete Review)</button>
-        <button className="delete-button" onClick={closeModal}>No (Keep Review)</button>
+        <button id="dont-delete" onClick={closeModal}>No (Keep Review)</button>
       </div>
     </div>
   );

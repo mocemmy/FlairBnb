@@ -66,24 +66,4 @@ const RatingsReviews = ({ user, owner, spotId, price }) => {
   );
 };
 
-/*
-<div className="reviews-container">
-        <h2>
-          <i className="fa-solid fa-star"></i>
-          {avgStars} {revCount} reviews
-        </h2>
-        {revCount === 0 && <p>No reviews yet</p>}
-        {user && !alreadyReviewed && (
-          <OpenModalButton
-            buttonText="Post Your Review"
-            modalComponent={<PostReview spotId={spotId} />}
-          />
-        )}
-        {spotReviews[spotId].map(rev => (
-          <ReviewCreator key={rev.id} review={rev}
-          />
-        ))}
-        
-      </div>
-*/
 export default RatingsReviews;

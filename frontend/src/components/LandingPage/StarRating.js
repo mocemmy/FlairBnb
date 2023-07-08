@@ -8,7 +8,7 @@ const StarRating = ({spot}) => {
     return (
         <>
             {spot.avgRating && <p className="star-rating"><i className="fa-solid fa-star">&nbsp;</i>{avgStars}</p>}
-            {!spot.avgRating && <p>new</p>}
+            {!spot.avgRating && <p>New</p>}
         </>
     )
 }

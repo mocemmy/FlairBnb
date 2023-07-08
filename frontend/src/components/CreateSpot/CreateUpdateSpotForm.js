@@ -87,6 +87,7 @@ const CreateUpdateSpotForm = ({ type, defaultValues }) => {
       errors.description = "Description needs 30 or more characters";
     if (!(title.length > 0)) errors.title = "Name is required";
     if (!price) errors.price = "Price is required";
+    if (price < 0) errors.price = "Price must be greater than zero";
     if (!(previewImage.length > 0))
       errors.previewImage = "Preview image is required";
 

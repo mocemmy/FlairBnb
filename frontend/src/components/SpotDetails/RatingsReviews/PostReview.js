@@ -49,7 +49,7 @@ const PostReview = ({spotId}) => {
             >
               <i className="fa-solid fa-star"></i>
             </div>
-          ))}
+          ))}&nbsp;Stars
         </div>
         <button
           type="submit"
