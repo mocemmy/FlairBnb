@@ -9,6 +9,7 @@ import ManageSpots from "./components/ManageSpots";
 import CreateSpot from "./components/CreateSpot";
 import UpdateSpot from "./components/UpdateSpot";
 import BookingForm from "./components/BookingsComonents/BookingForm";
+import BookingDetails from "./components/BookingsComonents/BookingDetails";
 
 
 function App() {
@@ -36,10 +37,13 @@ function App() {
             <UpdateSpot />
           </Route>
           <Route path='/spots/:spotId/reserve'>
-            <BookingForm />
+            <BookingForm type="CREATE" />
           </Route>
           <Route path='/spots/:spotId'>
             <SpotDetails />
+          </Route>
+          <Route path='/bookings/:bookingId/details'>
+            <BookingDetails />
           </Route>
         </Switch>
       )}

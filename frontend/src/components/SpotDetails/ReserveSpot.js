@@ -1,6 +1,9 @@
-const ReserveSpot = ({ spotInfo }) => {
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
+const ReserveSpot = ({ spotInfo, spotId }) => {
+  const history = useHistory();
     const onClick = () => {
-        window.alert("Feature coming soon");
+        history.push(`/spots/${spotId}/reserve`)
       };
       const  {price, revCount, avgStars, reviewLabel} = spotInfo;
       let decPrice = parseInt(price).toFixed(2);

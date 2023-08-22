@@ -38,6 +38,22 @@ router.get('/current', requireAuth, async(req, res) => {
     res.json({Bookings})
 })
 
+//Get booking details by its id
+router.get('/:bookingId', requireAuth, validateBookingById, async (req, res) => {
+    const bookingId = req.params.bookingId;
+    const booking = await Booking.findByPk(bookingId, {
+        include: [
+            {
+                model: Spot,
+            }, {
+                model: User
+            }
+        ]
+    })
+
+    res.json(booking)
+})
+
 //Edit a Booking
 router.put('/:bookingId', requireAuth, validateBookingById, validateDateInputs, validateBookingDateByBookingId, async(req, res) => {
     const { user } = req; 

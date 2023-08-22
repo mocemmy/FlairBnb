@@ -35,7 +35,7 @@ const RatingsReviews = ({ user, owner, spotId, price }) => {
   return (
     <>
       <div className="reserve-container">
-        <ReserveSpot spotInfo={spotInfo} />
+        <ReserveSpot spotInfo={spotInfo} spotId={spotId} />
       </div>
       <div className="reviews-container">
         {revCount > 0 && (

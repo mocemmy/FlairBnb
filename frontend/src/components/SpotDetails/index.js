@@ -7,11 +7,6 @@ import Loading from "../Loading";
 import SpotInfo from "./SpotInfo";
 import SpotImages from "./SpotImages";
 import "./Images.css";
-import RatingsReviews from "./RatingsReviews";
-import OpenModalButton from "../OpenModalButton";
-import PostReview from "./RatingsReviews/PostReview";
-import { thunkGetRevsForSpot, thunkGetRevsForUser } from "../../store/reviews";
-import ReviewCreator from "./RatingsReviews/ReviewCreator";
 
 const SpotDetails = () => {
   const dispatch = useDispatch();

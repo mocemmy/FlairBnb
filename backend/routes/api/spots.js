@@ -184,7 +184,7 @@ router.post('/:spotId/bookings', requireAuth, validateSpotById,validateDateInput
         endDate
     })
     
-    res.json(newBooking)
+    res.json({ "booking": newBooking, "user": user })
 
 })
 
