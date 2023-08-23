@@ -2,6 +2,8 @@ import { csrfFetch } from "./csrf"
 
 const GET_SPOT_BOOKINGS = "bookings/GET_SPOT_BOOKINGS"
 const GET_BOOKING_DETAILS = "bookings/GET_BOOKING_DETAILS"
+const GET_USER_BOOKINGS = "bookings/GET_USER_BOOKINGS"
+
 
 const actionGetSpotBookings = (bookings) => ({
     type: GET_SPOT_BOOKINGS,
@@ -11,6 +13,11 @@ const actionGetSpotBookings = (bookings) => ({
 const actionGetBookingDetails = (booking) => ({
     type: GET_BOOKING_DETAILS,
     booking
+})
+
+const actionGetUserBookings = (bookings) => ({
+    type: GET_USER_BOOKINGS,
+    bookings
 })
 
 export const thunkGetSpotBookings = (spotId) => async (dispatch) => {
@@ -55,6 +62,19 @@ export const thunkGetBookingDetails = (bookingId) => async (dispatch) => {
     }
 }
 
+export const thunkGetBookingsCurr = () => async (dispatch) => {
+    const response = await csrfFetch(`/api/bookings/current`)
+
+    if(response.ok){
+        const data = await response.json()
+        dispatch(actionGetUserBookings(data.Bookings))
+        return data
+    } else {
+        const errors = await response.json()
+        return errors
+    }
+}
+
 
 
 const initialState = {SpotBookings: null, UserBookings: null, SingleBooking: null}
@@ -67,6 +87,10 @@ const bookingsReducer = (state = initialState, action ) => {
             return newState;
         case GET_BOOKING_DETAILS:
             newState = {...state, SingleBooking: action.booking}
+            return newState;
+        case GET_USER_BOOKINGS:
+            newState = {...state, UserBookings: {}}
+            action.bookings.map(booking => newState.UserBookings[booking.id] = booking)
             return newState;
         default:
             return state;

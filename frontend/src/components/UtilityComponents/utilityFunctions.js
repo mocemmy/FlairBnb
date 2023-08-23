@@ -15,3 +15,15 @@ export const findNumDaysOfStay = (startDate, endDate) => {
     const numDays = Math.floor((endDate.getTime() - startDate.getTime()) / dayMillisecs )
     return numDays
 }
+
+export const datePast = (date) => {
+    const today = new Date()
+    if(typeof(date) !== 'object'){
+        date = new Date(date)
+    }
+    if(date - today > 0){
+        return false
+    } else {
+        return true
+    }
+}

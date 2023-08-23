@@ -10,7 +10,7 @@ import CreateSpot from "./components/CreateSpot";
 import UpdateSpot from "./components/UpdateSpot";
 import BookingForm from "./components/BookingsComonents/BookingForm";
 import BookingDetails from "./components/BookingsComonents/BookingDetails";
-
+import ManageBookings from "./components/BookingsComonents/ManageBookings";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,22 +27,28 @@ function App() {
           <Route exact path="/">
             <LandingPage />
           </Route>
-          <Route path='/spots/current'>
-              <ManageSpots />
+          <Route path="/spots/current">
+            <ManageSpots />
           </Route>
-          <Route path='/spots/new'>
-             <CreateSpot />
+          <Route path="/bookings/current">
+            <ManageBookings />
           </Route>
-          <Route path='/spots/:spotId/edit'>
+          <Route path="/reviews/current">
+            <h1>Manage Reviews</h1>
+          </Route>
+          <Route path="/spots/new">
+            <CreateSpot />
+          </Route>
+          <Route path="/spots/:spotId/edit">
             <UpdateSpot />
           </Route>
-          <Route path='/spots/:spotId/reserve'>
+          <Route path="/spots/:spotId/reserve">
             <BookingForm type="CREATE" />
           </Route>
-          <Route path='/spots/:spotId'>
+          <Route path="/spots/:spotId">
             <SpotDetails />
           </Route>
-          <Route path='/bookings/:bookingId/details'>
+          <Route path="/bookings/:bookingId/details">
             <BookingDetails />
           </Route>
         </Switch>
