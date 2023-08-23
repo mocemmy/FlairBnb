@@ -1,0 +1,12 @@
+.image {
+  width: 20rem;
+  height: 20rem;
+}
+
+.slide {
+  opacity: 0;
+}
+
+.slide.selected {
+  opacity: 1;
+}
