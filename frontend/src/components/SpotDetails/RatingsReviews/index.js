@@ -55,7 +55,7 @@ const RatingsReviews = ({ user, owner, spotId, price }) => {
         user.id !== owner && (
           <OpenModalButton
             buttonText="Post Your Review"
-            modalComponent={<PostReview spotId={spotId} />}
+            modalComponent={<PostReview type="CREATE" spotId={spotId} />}
           />
         )}
         {reviews.reverse().map((rev) => (

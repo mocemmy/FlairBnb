@@ -2,29 +2,57 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import "./ReviewStars.css";
-import { thunkCreateReview } from "../../../store/reviews";
+import { thunkCreateReview, thunkUpdateReview } from "../../../store/reviews";
 import { useModal } from "../../../context/Modal";
 import { thunkGetSpotDetails } from "../../../store/spots";
 
-const PostReview = ({spotId}) => {
+const PostReview = ({ spotId, type, oldReview }) => {
   const dispatch = useDispatch();
-  const [review, setReview] = useState("");
-  const [stars, setStars] = useState(null);
-  const [activeRating, setActiveRating] = useState(stars);
-  const {closeModal} = useModal();
-  const [errors, setErrors] = useState('');
+  const [review, setReview] = useState(oldReview ? oldReview.review : "");
+  const [stars, setStars] = useState(oldReview ? oldReview.stars : null);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [activeRating, setActiveRating] = useState(
+    oldReview ? oldReview.stars : null
+  );
+  const { closeModal } = useModal();
+  const [errors, setErrors] = useState("");
+
+  useEffect(() => {
+    const validationErrors = {};
+    if (!stars) validationErrors.stars = "Star rating is required";
+    if (!review) validationErrors.review = "Review is required";
+    if (review?.length < 10)
+      validationErrors.review = "Review must be longer than 10 characters";
+
+    setErrors(validationErrors);
+  }, [stars, review]);
+
   const onSubmit = async (e) => {
     e.preventDefault();
+    setHasSubmitted(true);
     const reviewBody = {
       review,
       stars,
     };
-     try {
-      await dispatch(thunkCreateReview(reviewBody, spotId));
+    if (!Object.keys(errors).length) {
+      if (type === "CREATE") {
+        try {
+          await dispatch(thunkCreateReview(reviewBody, spotId));
+        } catch (e) {
+          const serverErrors = { serverErrors: e };
+          setErrors(serverErrors);
+        }
+      } else {
+        try {
+          console.log(spotId)
+          await dispatch(thunkUpdateReview(reviewBody, spotId, oldReview.id))
+        } catch (e) {
+          const serverErrors = { serverErrors: e };
+          setErrors(serverErrors);
+        }
+      }
       closeModal();
-     } catch (e) {
-       setErrors(e);
-     }
+    }
   };
 
   const numStars = [1, 2, 3, 4, 5]; //allows 5 stars
@@ -32,12 +60,10 @@ const PostReview = ({spotId}) => {
     <div className="review-modal-container">
       <form className="review-form" onSubmit={(e) => onSubmit(e)}>
         <h1>How was your stay?</h1>
-        {errors && <p className="errors">{errors.statusText}</p>}
-        <textarea
-          placeholder="Leave your review here..."
-          value={review}
-          onChange={(e) => setReview(e.target.value)}
-        />
+        {errors && <p className="errors">{errors.serverErrors}</p>}
+        {hasSubmitted && errors.stars && (
+          <p className="errors">{errors.stars}</p>
+        )}
         <div className="stars-container">
           {numStars.map((num) => (
             <div
@@ -49,14 +75,18 @@ const PostReview = ({spotId}) => {
             >
               <i className="fa-solid fa-star"></i>
             </div>
-          ))}&nbsp;Stars
+          ))}
+          &nbsp;Stars
         </div>
-        <button
-          type="submit"
-          disabled={review.length > 10 && !!stars ? false : true}
-        >
-          Submit Your Review
-        </button>
+        {hasSubmitted && errors.review && (
+          <p className="errors">{errors.review}</p>
+        )}
+        <textarea
+          placeholder="Leave your review here..."
+          value={review}
+          onChange={(e) => setReview(e.target.value)}
+        />
+        <button type="submit">Submit Your Review</button>
       </form>
     </div>
   );

@@ -48,6 +48,22 @@ export const thunkDeleteReview = (reviewId, spotId) => async dispatch => {
     }
 }
 
+export const thunkUpdateReview = (data, spotId, reviewId) => async dispatch => {
+    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+        method: "PUT",
+        body: JSON.stringify(data)
+    })
+    if(response.ok) {
+        const data = await response.json();
+        dispatch(thunkGetRevsForSpot(spotId))
+        return data
+    } else {
+        const errors = await response.json()
+        return errors
+    }
+}
+
+
 
 export const thunkCreateReview = (reviewBody, spotId) => async dispatch => {
     spotId = +spotId;

@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import OpenModalButton from '../../OpenModalButton';
 import ConfirmDeleteReview from './ConfirmDeleteReview';
+import PostReview from './PostReview';
 
 const getMonthName = (number) => {
     const date = new Date();
@@ -22,6 +23,11 @@ const ReviewCreator = ({ review }) => {
                 <h6>{month}&nbsp;{year}</h6>
                 <p>{review.review}</p>
             </div>
+            {user && review.User.id === user.id &&
+            <OpenModalButton
+            buttonText="edit"
+            modalComponent={<PostReview oldReview={review} type="UPDATE" spotId={spotId}/>}
+            />}
             {user && review.User.id === user.id &&
             <OpenModalButton
             buttonText="delete"
