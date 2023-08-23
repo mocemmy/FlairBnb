@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import OpenModalButton from "../../OpenModalButton";
 import BookingForm from "../BookingForm";
+import DeleteBooking from "../DeleteBooking";
 
 function BookingDisplay({ booking }) {
   const isPastBooking = datePast(booking.startDate);
@@ -24,9 +25,10 @@ function BookingDisplay({ booking }) {
         />
       )}
       {!isPastBooking && (
-        <button onClick={(e) => window.alert("Feature coming soon!")}>
-          Delete booking
-        </button>
+        <OpenModalButton
+          buttonText="Delete booking"
+          modalComponent={<DeleteBooking bookingId={booking.id}/>}
+        />
       )}
     </div>
   );

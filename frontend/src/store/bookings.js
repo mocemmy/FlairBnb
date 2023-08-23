@@ -93,6 +93,22 @@ export const thunkUpdateBooking = (bookingId, data) => async (dispatch) => {
 
 
 
+export const thunkDeleteBooking = (bookingId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+        method: "DELETE"
+    })
+
+    if(response.ok){
+        const data = await response.json()
+        dispatch(thunkGetBookingsCurr())
+        return data
+    } else {
+        const errors = await response.json()
+        return errors
+    }
+}
+
+
 const initialState = {SpotBookings: null, UserBookings: null, SingleBooking: null}
 
 const bookingsReducer = (state = initialState, action ) => {
