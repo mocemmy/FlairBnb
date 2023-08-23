@@ -58,7 +58,15 @@ router.get('/:bookingId', requireAuth, validateBookingById, async (req, res) => 
 router.put('/:bookingId', requireAuth, validateBookingById, validateDateInputs, validateBookingDateByBookingId, async(req, res) => {
     const { user } = req; 
     const { startDate, endDate } = req.body;
-    const booking = await Booking.findByPk(req.params.bookingId);
+    const booking = await Booking.findByPk(req.params.bookingId, {
+        include: [
+            {
+                model: Spot,
+            }, {
+                model: User
+            }
+        ]
+    });
     if(user.id !== booking.userId){
         unauthorizedUser();
     }

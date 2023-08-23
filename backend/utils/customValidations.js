@@ -149,8 +149,11 @@ const validateBookingDateByBookingId = [
         let bookings = await Booking.findAll({
             where: {
                 spotId: oldBooking.spotId,
+                id: {
+                    [Op.ne] : oldBooking.id
+                }
             },
-            attributes: ['startDate', 'endDate']
+            attributes: ['id', 'startDate', 'endDate']
         })
         bookings = bookings.map(booking => booking.toJSON());
         let conflicts = checkConflicts(bookings, value);
@@ -164,6 +167,9 @@ const validateBookingDateByBookingId = [
         let bookings = await Booking.findAll({
             where: {
                 spotId: oldBooking.spotId,
+                id: {
+                    [Op.ne] : oldBooking.id
+                }
             },
             attributes: ['startDate', 'endDate']
         })

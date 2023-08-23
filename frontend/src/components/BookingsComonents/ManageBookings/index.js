@@ -16,7 +16,6 @@ function ManageBookings () {
 
     if(!user || !bookings) return <Loading />
     const bookingsArr = Object.values(bookings)
-    console.log(bookingsArr)
     return (
         <>
         <h1>Your Bookings</h1>

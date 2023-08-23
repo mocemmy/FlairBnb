@@ -75,6 +75,22 @@ export const thunkGetBookingsCurr = () => async (dispatch) => {
     }
 }
 
+export const thunkUpdateBooking = (bookingId, data) => async (dispatch) => {
+    const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+        method: "PUT",
+        body: JSON.stringify(data)        
+    })
+
+    if(response.ok){
+        const data = await response.json()
+        dispatch(actionGetBookingDetails(data))
+        return data
+    } else {
+        const errors = await response.json()
+        return errors
+    }
+}
+
 
 
 const initialState = {SpotBookings: null, UserBookings: null, SingleBooking: null}

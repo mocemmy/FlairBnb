@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   thunkCreateBooking,
   thunkGetSpotBookings,
+  thunkUpdateBooking
 } from "../../../store/bookings";
 import {
   useHistory,
@@ -14,23 +15,38 @@ import {
 import Loading from "../../Loading";
 import { thunkGetSpotDetails } from "../../../store/spots";
 import { findCostOfStay } from "../../UtilityComponents/utilityFunctions";
+import { useModal } from "../../../context/Modal";
 
-function BookingForm({ type }) {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+
+function BookingForm({ oldBooking, type }) {
+  const [startDate, setStartDate] = useState(oldBooking? addDays(new Date(oldBooking.startDate), 1) : new Date());
+  const [endDate, setEndDate] = useState(oldBooking? addDays(new Date(oldBooking.endDate), 1) : new Date());
   const [price, setPrice] = useState();
   const [errors, setErrors] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const { spotId } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
+  const { closeModal } = useModal();
   const bookings = useSelector((state) => state.bookings.SpotBookings);
   const spot = useSelector((state) => state.spots.singleSpot);
+
+  let title, buttonText
+  if(type === "CREATE"){
+    title = "Create a booking";
+    buttonText = "Book Spot"
+  } else {
+    title = "Update your booking"
+    buttonText = "Save"
+  }
 
   useEffect(() => {
     if (spotId) {
       dispatch(thunkGetSpotBookings(spotId));
       dispatch(thunkGetSpotDetails(spotId));
+    } else if (oldBooking?.Spot.id){
+      dispatch(thunkGetSpotBookings(oldBooking.Spot.id));
+      dispatch(thunkGetSpotDetails(oldBooking.Spot.id));
     }
   }, [dispatch, spotId]);
 
@@ -61,7 +77,9 @@ function BookingForm({ type }) {
       start: subDays(start, 0),
       end: addDays(end, 1),
     };
-    alreadyBookedDates.push(data);
+    if(oldBooking?.id !== booking.id){
+      alreadyBookedDates.push(data);
+    }
   }
 
   const handleSubmit = async (e) => {
@@ -79,11 +97,17 @@ function BookingForm({ type }) {
           serverErrors = { serverErrors: response };
           setErrors(serverErrors);
         }
+      } else {
+        response = await dispatch(thunkUpdateBooking(oldBooking.id, data));
       }
 
-      if (response.booking.id) {
+      if (response.booking?.id) {
         history.push(`/bookings/${response.booking.id}/details`);
+      } else if(oldBooking){
+        history.push(`/bookings/${oldBooking.id}/details`)
       }
+
+      closeModal();
     }
   };
 
@@ -92,8 +116,9 @@ function BookingForm({ type }) {
     history.push(`/spots/${spotId}`)
   }
   return (
-    <>
+    <div>
       <form>
+        <h1>{title}</h1>
         {hasSubmitted && errors.dates && (
           <p className="errors">{errors.dates}</p>
         )}
@@ -120,13 +145,13 @@ function BookingForm({ type }) {
           maxDate={addDays(new Date(), 365)}
 
         />
-        {price && <p>Cost of stay: ${price}</p>}
+        {!!price && <p>Cost of stay: ${price}</p>}
         <button type="submit" onClick={handleSubmit}>
-          Book Spot
+          {buttonText}
         </button>
         <button onClick={handleCancel}>Cancel</button>
       </form>
-    </>
+    </div>
   );
 }
 
