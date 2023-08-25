@@ -1,0 +1,33 @@
+.manage-container>h1{
+    margin: 2rem;
+}
+
+.booking-display-container {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+    box-shadow: 0 0.1rem 0.5rem rgba(0, 0, 0, 0.15);
+    width: fit-content;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.spot-link {
+    margin: 0;
+}
+
+.spot-image {
+    min-width: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.booking-info-container {
+    padding-top: 1rem 
+}
+
+.small-button-container.booking {
+    width: 100%;
+    gap: 0;
+    padding: 0;
+}

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   thunkCreateBooking,
   thunkGetSpotBookings,
-  thunkUpdateBooking
+  thunkUpdateBooking,
 } from "../../../store/bookings";
 import {
   useHistory,
@@ -16,11 +16,15 @@ import Loading from "../../Loading";
 import { thunkGetSpotDetails } from "../../../store/spots";
 import { findCostOfStay } from "../../UtilityComponents/utilityFunctions";
 import { useModal } from "../../../context/Modal";
-
+import "./BookingForm.css";
 
 function BookingForm({ oldBooking, type }) {
-  const [startDate, setStartDate] = useState(oldBooking? addDays(new Date(oldBooking.startDate), 1) : new Date());
-  const [endDate, setEndDate] = useState(oldBooking? addDays(new Date(oldBooking.endDate), 1) : new Date());
+  const [startDate, setStartDate] = useState(
+    oldBooking ? addDays(new Date(oldBooking.startDate), 1) : new Date()
+  );
+  const [endDate, setEndDate] = useState(
+    oldBooking ? addDays(new Date(oldBooking.endDate), 1) : new Date()
+  );
   const [price, setPrice] = useState();
   const [errors, setErrors] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -31,20 +35,20 @@ function BookingForm({ oldBooking, type }) {
   const bookings = useSelector((state) => state.bookings.SpotBookings);
   const spot = useSelector((state) => state.spots.singleSpot);
 
-  let title, buttonText
-  if(type === "CREATE"){
+  let title, buttonText;
+  if (type === "CREATE") {
     title = "Create a booking";
-    buttonText = "Book Spot"
+    buttonText = "Book Spot";
   } else {
-    title = "Update your booking"
-    buttonText = "Save"
+    title = "Update your booking";
+    buttonText = "Save";
   }
 
   useEffect(() => {
     if (spotId) {
       dispatch(thunkGetSpotBookings(spotId));
       dispatch(thunkGetSpotDetails(spotId));
-    } else if (oldBooking?.Spot.id){
+    } else if (oldBooking?.Spot.id) {
       dispatch(thunkGetSpotBookings(oldBooking.Spot.id));
       dispatch(thunkGetSpotDetails(oldBooking.Spot.id));
     }
@@ -60,7 +64,7 @@ function BookingForm({ oldBooking, type }) {
       validationErrors.dates = "Start and end dates cannot be the same day";
 
     if (!Object.keys(validationErrors).length) {
-        const totalPrice = findCostOfStay(spot.price, startDate, endDate)
+      const totalPrice = findCostOfStay(spot.price, startDate, endDate);
       setPrice(totalPrice);
     }
 
@@ -77,7 +81,7 @@ function BookingForm({ oldBooking, type }) {
       start: subDays(start, 0),
       end: addDays(end, 1),
     };
-    if(oldBooking?.id !== booking.id){
+    if (oldBooking?.id !== booking.id) {
       alreadyBookedDates.push(data);
     }
   }
@@ -103,8 +107,8 @@ function BookingForm({ oldBooking, type }) {
 
       if (response.booking?.id) {
         history.push(`/bookings/${response.booking.id}/details`);
-      } else if(oldBooking){
-        history.push(`/bookings/${oldBooking.id}/details`)
+      } else if (oldBooking) {
+        history.push(`/bookings/${oldBooking.id}/details`);
       }
 
       closeModal();
@@ -113,12 +117,17 @@ function BookingForm({ oldBooking, type }) {
 
   const handleCancel = (e) => {
     e.preventDefault();
-    history.push(`/spots/${spotId}`)
-  }
+    if(type ==="CREATE"){
+      history.push(`/spots/${spotId}`);
+    } else {
+      closeModal();
+    }
+  };
   return (
-    <div>
-      <form>
+    <div className="booking-form-container">
+      <form className="booking-form">
         <h1>{title}</h1>
+        <p>Price per night: <span id="price">${spot.price}</span></p>
         {hasSubmitted && errors.dates && (
           <p className="errors">{errors.dates}</p>
         )}
@@ -143,13 +152,14 @@ function BookingForm({ oldBooking, type }) {
           onChange={(date) => setEndDate(date)}
           minDate={startDate ? addDays(startDate, 1) : new Date()}
           maxDate={addDays(new Date(), 365)}
-
         />
-        {!!price && <p>Cost of stay: ${price}</p>}
-        <button type="submit" onClick={handleSubmit}>
-          {buttonText}
-        </button>
-        <button onClick={handleCancel}>Cancel</button>
+        {!!price && <p>Cost of stay: <span id='price'>${price}</span></p>}
+        <div className="small-button-container">
+          <button className="cancel-button" onClick={handleCancel}>Cancel</button>
+          <button type="submit" onClick={handleSubmit}>
+            {buttonText}
+          </button>
+        </div>
       </form>
     </div>
   );
