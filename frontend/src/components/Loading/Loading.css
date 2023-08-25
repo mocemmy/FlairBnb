@@ -1,6 +1,7 @@
-.loading {
+.loader-container {
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-top: 20%;
+  justify-content: center;
+  width: 100vw;
+  height: 80vh;
 }
