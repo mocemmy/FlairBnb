@@ -32,3 +32,19 @@
     box-sizing: border-box;
 }
 
+.small-button-container.review-display {
+    justify-content: flex-start;
+}
+
+.edit-delete-button {
+    margin: 0
+}
+
+.review-body-input {
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.stars-container {
+    margin-bottom: 1rem;;
+}

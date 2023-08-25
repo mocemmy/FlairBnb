@@ -1,6 +1,7 @@
 .image {
-  width: 20rem;
+  min-width: 15rem;
   height: 20rem;
+  margin: 0;
 }
 
 .slide {
@@ -9,4 +10,19 @@
 
 .slide.selected {
   opacity: 1;
+}
+
+.slideshow-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    width: fit-content;
+}
+
+.small-button-container {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+    justify-content: center;
 }

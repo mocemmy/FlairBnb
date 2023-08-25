@@ -6,3 +6,7 @@
 button:hover {
     cursor: pointer;
 }
+
+.cancel-button {
+    background-color: gray;
+}

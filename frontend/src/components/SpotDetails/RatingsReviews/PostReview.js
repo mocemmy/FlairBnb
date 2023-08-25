@@ -82,11 +82,15 @@ const PostReview = ({ spotId, type, oldReview }) => {
           <p className="errors">{errors.review}</p>
         )}
         <textarea
+          className="review-body-input"
           placeholder="Leave your review here..."
           value={review}
           onChange={(e) => setReview(e.target.value)}
         />
+        <div className="small-button-container">
+          <button className="cancel-button" onClick={closeModal}>Cancel</button>
         <button type="submit">Submit Your Review</button>
+        </div>
       </form>
     </div>
   );
