@@ -6,9 +6,9 @@
     box-sizing: border-box;
     display: grid;
     grid-template: 
-        "a a b" 1fr 
-        "c c c" 1fr 
-        "c c c" 1fr;
+        "a a b"  
+        "c c c"  
+        "c c c" ;
 }
 
 .reserve-container {
