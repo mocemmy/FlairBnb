@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./ImageSliderModal.css";
 
+
 function ImageSliderModal({ imageArr, currImage }) {
   const [moreImagesLeft, setMoreImagesLeft] = useState(
     currImage > 0 ? true : false

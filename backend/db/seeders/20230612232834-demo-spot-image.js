@@ -7,33 +7,22 @@ if (process.env.NODE_ENV === 'production') {
 }
 options.tableName = 'SpotImages';
 
-const spotImages = [
-  {
-    spotId: 1,
-    url: 'https://www.exploregeorgia.org/sites/default/files/styles/hero_xs/public/2020-02/treehouse-flintstone-credit-ben-galland.jpg?itok=S1DZrPXp',
-    preview: true,
-  },
-  {
-    spotId: 2,
-    url: 'https://www.alaskacollection.com/Alaska/media/Images/Stories/2021/06/MBN-Alaska-Hotels-For-Every-Style-Cabins-River.jpg?ext=.jpg',
-    preview: true,
-  },
-  {
-    spotId: 3,
-    url: 'https://localadventurer.com/wp-content/uploads/2018/10/unique-hotels-in-atlanta.jpg',
-    preview: true,
-  },
-  {
-    spotId: 4,
-    url: 'https://localadventurer.com/wp-content/uploads/2018/10/best-place-to-stay-in-atlanta-ga.jpg',
-    preview: true,
-  },
-  {
-    spotId: 5,
-    url: 'https://localadventurer.com/wp-content/uploads/2018/10/bed-and-breakfast-atlanta-ga.jpg',
-    preview: true,
-  },
-]
+const spotData = new Array(31)
+spotData.fill(null)
+const spotImages = [];
+
+// Loop through each spot and generate 5 images for each of the 31 seeded spots
+spotData.forEach((spot, index) => {
+  const spotId = index + 1;
+
+  // Generate 5 images for each spot
+  for (let i = 1; i <= 5; i++) {
+    const isPreview = i === 1 ? true : false;
+    const url = `/images/seederImages/${spotId}-${i}.png`
+    console.log(url)
+    spotImages.push({ spotId, url: url, preview: isPreview });
+  }
+});
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
