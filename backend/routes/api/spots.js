@@ -16,7 +16,7 @@ const router = express.Router();
 
 
 //GET all spots:
-router.get('/', validateSearchParams, async(req, res) => {
+router.get('/search', validateSearchParams, async(req, res) => {
     //find all spots
     const pagination = paginationFunc(req.query);
     let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query;
@@ -86,13 +86,9 @@ router.get('/', validateSearchParams, async(req, res) => {
     });
 })
 
-//Get all spots owned by the current user:
-router.get('/current', requireAuth, async(req, res) => {
-    const { user } = req;
+//Get all Spots with aggregate data
+router.get('/', async(req, res) => {
     const Spots = await Spot.findAll({
-        where: {
-            "ownerId": user.toJSON().id
-        },
         include: [
             {
                 model: Review,
@@ -100,20 +96,59 @@ router.get('/current', requireAuth, async(req, res) => {
             },
             {
                 model: SpotImage,
-                attributes: [],
                 where: {
                     preview: true
-                }
+                },
+                attributes: []
+            },
+            {
+                model: User,
+                as: 'Owner',
+                attributes: ['id', 'firstName', 'lastName']
             }
         ],
         attributes: {
             include: [
-                [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
+                [sequelize.fn('COUNT', sequelize.col('Reviews.id')), 'numReviews'],
+                [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgStarRating'],
                 [sequelize.col('SpotImages.url'), 'previewImage']
             ]
         },
-        group: ['Spot.id', 'SpotImages.url']
+        group: ['Spot.id', 'SpotImages.id', 'Owner.id']
+    })
+    res.json({Spots})
+})
 
+//Get all spots owned by the current user:
+router.get('/current', requireAuth, async(req, res) => {
+    const { user } = req;
+    const Spots = await Spot.findAll({
+        include: [
+            {
+                model: Review,
+                attributes: []
+            },
+            {
+                model: SpotImage,
+                where: {
+                    preview: true
+                },
+                attributes: []
+            },
+            {
+                model: User,
+                as: 'Owner',
+                attributes: ['id', 'firstName', 'lastName']
+            }
+        ],
+        attributes: {
+            include: [
+                [sequelize.fn('COUNT', sequelize.col('Reviews.id')), 'numReviews'],
+                [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgStarRating'],
+                [sequelize.col('SpotImages.url'), 'previewImage']
+            ]
+        },
+        group: ['Spot.id', 'SpotImages.id', 'Owner.id']
     })
     res.json({Spots});
     

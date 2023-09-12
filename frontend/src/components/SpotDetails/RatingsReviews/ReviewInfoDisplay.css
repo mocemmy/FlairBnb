@@ -1,0 +1,16 @@
+#stars>i{
+    color: #ff5a5f;
+    font-size: smaller;
+}
+
+
+.review-info-display-container {
+    display: flex;
+
+}
+
+.rating-tag,
+.rating-tag>span{
+    color: gray;
+    font-size: small;
+}

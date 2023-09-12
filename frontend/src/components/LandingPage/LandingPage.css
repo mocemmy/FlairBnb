@@ -50,7 +50,8 @@
 }
 
 .city-star-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     width: 100%;
     justify-content: space-between;
     align-items: center;

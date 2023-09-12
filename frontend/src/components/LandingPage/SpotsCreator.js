@@ -2,17 +2,10 @@ import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import "./tooltip.css";
 import StarRating from "./StarRating";
+import ReviewInfoDisplay from "../SpotDetails/RatingsReviews/ReviewInfoDisplay";
 
 function SpotsCreator({ spot }) {
   const history = useHistory();
-  const [showTip, setShowTip] = useState(false);
-  const displayTip = () => {
-    setShowTip(true);
-  };
-  const hideTip = () => {
-    setShowTip(false);
-  };
-  const hidden = "tooltip-container " + showTip ? "tool-tip" : "hidden";
 
   const onClick = (e) => {
     history.push(`/spots/${spot.id}`);
@@ -23,8 +16,7 @@ function SpotsCreator({ spot }) {
       key={spot.id}
       className="grid-item"
       onClick={(e) => onClick(e)}
-      onMouseEnter={displayTip}
-      onMouseLeave={hideTip}
+      title={spot.name}
     >
       <div
         className="image-container"
@@ -33,14 +25,13 @@ function SpotsCreator({ spot }) {
           backgroundSize: "cover",
         }}
       >
-        {showTip && <p className={hidden}>{spot.name}</p>}
       </div>
       <ul className="spot-info">
         <div className="city-star-container">
           <li className="spot-location">
             {spot.city}, {spot.state}
           </li>
-          <StarRating spot={spot} />
+          <ReviewInfoDisplay spot={spot} />
         </div>
         <li>
           <span className="price">${price}</span> night
