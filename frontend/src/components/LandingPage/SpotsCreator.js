@@ -31,7 +31,7 @@ function SpotsCreator({ spot }) {
           <li className="spot-location">
             {spot.city}, {spot.state}
           </li>
-          <ReviewInfoDisplay spot={spot} />
+          <StarRating spot={spot} />
         </div>
         <li>
           <span className="price">${price}</span> night

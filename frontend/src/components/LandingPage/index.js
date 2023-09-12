@@ -18,7 +18,7 @@ function LandingPage() {
     return (
         <div className='spots-container'>
             <div className='spots-list'>
-                {spots.map(spotObj =><SpotsCreator key={spotObj.id} spot={spotObj}/>)}
+                {spots.reverse().map(spotObj =><SpotsCreator key={spotObj.id} spot={spotObj}/>)}
             </div>
         </div>
     )

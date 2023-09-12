@@ -7,7 +7,7 @@
 
 .grid-item {
     box-sizing: border-box;
-    width: fit-content;
+    width: 15rem;
 }
 
 .image-container {
@@ -16,6 +16,7 @@
     overflow: hidden;
     position: relative;
     border-radius: 1rem;
+    box-sizing: border-box;
     border: 1px solid rgb(211, 211, 211);
 }
 .image-container img {
@@ -33,9 +34,13 @@
     cursor: pointer;
 }
 
-
-.spot-location {
+.spot-location,
+.price {
     font-weight: bold;
+    font-size: small;
+}
+.city-star-container>p{
+    font-size: small;
 }
 
 .spot-info {
@@ -50,12 +55,9 @@
 }
 
 .city-star-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    justify-content: space-between;
     width: 100%;
     justify-content: space-between;
     align-items: center;
-}
-.price {
-    font-weight: bold;
 }

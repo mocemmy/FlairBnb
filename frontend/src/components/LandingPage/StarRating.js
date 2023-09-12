@@ -1,14 +1,15 @@
 const StarRating = ({spot}) => {
     let avgStars = "new";
-    if(spot.avgRating){
-        avgStars = parseInt(spot.avgRating).toFixed(2);
+    console.log('spot', spot)
+    if(spot.avgStarRating){
+        avgStars = (+spot.avgStarRating).toFixed(2);
     }
     
 
     return (
         <>
-            {spot.avgRating && <p className="star-rating"><i className="fa-solid fa-star">&nbsp;</i>{avgStars}</p>}
-            {!spot.avgRating && <p>New</p>}
+            {spot.avgStarRating && <p className="star-rating"><i className="fa-solid fa-star">&nbsp;</i>{avgStars}</p>}
+            {!spot.avgStarRating && <p>New</p>}
         </>
     )
 }

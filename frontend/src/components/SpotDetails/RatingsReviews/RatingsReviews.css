@@ -27,6 +27,11 @@
     box-sizing: border-box;
 }
 
+.review-content-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
 .reviews-container {
     grid-area: c;
     box-sizing: border-box;

@@ -49,18 +49,20 @@ const RatingsReviews = ({ user, owner, spotId, price }) => {
             <i className="fa-solid fa-star"></i>&nbsp;{avgStars}
           </h2>
         )}
-        {revCount === 0 && user && user.id !== owner && <p>Be the first to post a review!</p>}
-        {user && 
-        !alreadyReviewed && 
-        user.id !== owner && (
+        {revCount === 0 && user && user.id !== owner && (
+          <p>Be the first to post a review!</p>
+        )}
+        {user && !alreadyReviewed && user.id !== owner && (
           <OpenModalButton
             buttonText="Post Your Review"
             modalComponent={<PostReview type="CREATE" spotId={spotId} />}
           />
         )}
-        {reviews.reverse().map((rev) => (
-          <ReviewCreator key={rev.id} review={rev} />
-        ))}
+        <div className="review-content-container">
+          {reviews.reverse().map((rev) => (
+            <ReviewCreator key={rev.id} review={rev} />
+          ))}
+        </div>
       </div>
     </>
   );
