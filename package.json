@@ -12,7 +12,7 @@
     "sequelize-cli": "npm run --prefix backend sequelize-cli",
     "start": "npm start --prefix backend",
     "build": "npm run build --prefix backend",
-    "reset": "npm run sequelize --prefix backend db:seed:undo:all && npm run sequelize --prefix backend db migrate:undo:all && npm run sequelize --prefix backend db:migrate && npm run sequelize --prefix backend db:seed:all"
+    "reset": "npm run sequelize --prefix backend db:seed:undo:all && npm run sequelize --prefix backend db:migrate:undo:all && npm run sequelize --prefix backend db:migrate && npm run sequelize --prefix backend db:seed:all"
   },
   "repository": {
     "type": "git",
