@@ -9,6 +9,7 @@ import Loading from "../../Loading";
 import ReserveSpot from "../ReserveSpot";
 
 const RatingsReviews = ({ user, owner, spotId, price }) => {
+  const userOwnsSpot = user.id === owner;
   const dispatch = useDispatch();
   const reviewsObj = useSelector((state) => state.reviews.spot);
   let alreadyReviewed = false;
@@ -35,7 +36,7 @@ const RatingsReviews = ({ user, owner, spotId, price }) => {
   return (
     <>
       <div className="reserve-container">
-        <ReserveSpot spotInfo={spotInfo} spotId={spotId} />
+        <ReserveSpot owned={userOwnsSpot} spotInfo={spotInfo} spotId={spotId} />
       </div>
       <div className="reviews-container">
         {revCount > 0 && (
@@ -49,7 +50,7 @@ const RatingsReviews = ({ user, owner, spotId, price }) => {
             <i className="fa-solid fa-star"></i>&nbsp;{avgStars}
           </h2>
         )}
-        {revCount === 0 && user && user.id !== owner && (
+        {revCount === 0 && user && !userOwnsSpot && (
           <p>Be the first to post a review!</p>
         )}
         {user && !alreadyReviewed && user.id !== owner && (

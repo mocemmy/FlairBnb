@@ -18,7 +18,8 @@ import { findCostOfStay } from "../../UtilityComponents/utilityFunctions";
 import { useModal } from "../../../context/Modal";
 import "./BookingForm.css";
 
-function BookingForm({ oldBooking, type }) {
+function BookingForm({ spotId, oldBooking, type }) {
+
   const [startDate, setStartDate] = useState(
     oldBooking ? addDays(new Date(oldBooking.startDate), 1) : new Date()
   );
@@ -28,7 +29,6 @@ function BookingForm({ oldBooking, type }) {
   const [price, setPrice] = useState();
   const [errors, setErrors] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const { spotId } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
   const { closeModal } = useModal();
@@ -117,11 +117,7 @@ function BookingForm({ oldBooking, type }) {
 
   const handleCancel = (e) => {
     e.preventDefault();
-    if(type ==="CREATE"){
-      history.push(`/spots/${spotId}`);
-    } else {
       closeModal();
-    }
   };
   return (
     <div className="booking-form-container">

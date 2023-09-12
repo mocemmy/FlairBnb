@@ -8,7 +8,6 @@ import SpotDetails from "./components/SpotDetails";
 import ManageSpots from "./components/ManageSpots";
 import CreateSpot from "./components/CreateSpot";
 import UpdateSpot from "./components/UpdateSpot";
-import BookingForm from "./components/BookingsComonents/BookingForm";
 import BookingDetails from "./components/BookingsComonents/BookingDetails";
 import ManageBookings from "./components/BookingsComonents/ManageBookings";
 
@@ -41,9 +40,6 @@ function App() {
           </Route>
           <Route path="/spots/:spotId/edit">
             <UpdateSpot />
-          </Route>
-          <Route path="/spots/:spotId/reserve">
-            <BookingForm type="CREATE" />
           </Route>
           <Route path="/spots/:spotId">
             <SpotDetails />
